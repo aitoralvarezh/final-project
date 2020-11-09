@@ -91,6 +91,15 @@ header {
 
 }
 
+.back:hover {
+    background-color: #0ca9e2;
+    transition: ease-in-out 0.3s;
+}
+.foward:hover {
+    background-color: #0ca9e2;
+    transition: ease-in-out 0.3s;
+}
+
 /* ||||||||||||||||||||||||||||||||||||| REGISTRO |||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 
 .register-form {
@@ -116,7 +125,6 @@ header {
     padding: 20px;
     margin: 20px;
 }
-
 
 
 /*||||||||||||||||||||||||| TEMAS DE LA APP ||||||||||||||||||||||||||||||||||||*/
@@ -235,17 +243,20 @@ header {
     border: 1px solid green;
 }
 
-.colophon {
-    margin-bottom: 0;
+.redact {
+    position: relative;
+    padding : 12px 25px;
     background-color: #0086b3;
-    padding: 20px;
+    color: whitesmoke;
+    font-size: 50px;
+    border-radius: 50%;
+    justify-content: right;
+    margin: 20px;
 }
 
-.bottom-menu {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    list-style: none;
+.redact:hover {
+    background-color: #0ca9e2;
+    transition: ease-in-out 0.3s;
 }
 
 /*||||||||||||||||||||||||| PROFILE PAGE ||||||||||||||||||||||||||||||||||||*/
