@@ -15,11 +15,16 @@ html {
 }
 
 a {
-    color:whitesmoke;
+
     text-decoration: none;
     font-family: 'Comfortaa';
     font-weight: bold;
 }
+
+li {
+    list-style: none;
+}
+
 .index {
     background-color: #0086b3;
 }
@@ -188,16 +193,36 @@ header {
 .feed {
     display: flex;
 }
+.main-articles {
+    flex-grow: 1;
+}
 .articles {
     border-top-right-radius: 90px;
     border-bottom-right-radius: 90px; 
     border-top-left-radius: 90px;
     border-bottom-left-radius: 90px;
+    font-size: 20px;
     padding: 20px;
-    background-color: whitesmoke;
     margin: 20px;
     border: 1px solid green;
+}
+
+
+
+.article-link {
+    color: black;
+    cursor: pointer;
+    padding: 20px;
     
+
+}
+
+.star-opinions {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid red;
+    align-items: center;
+    max-width: 300px;
 }
 .star-choices {
     border-top-right-radius: 90px;
@@ -274,8 +299,6 @@ header {
     align-items: center;
     display: flex;
     flex-direction: column;
-    height: 50vh;
-    
 }
 
 
