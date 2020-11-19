@@ -1,0 +1,46 @@
+CREATE TABLE users (
+id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(20) UNIQUE NOT NULL,
+image VARCHAR(100),
+name VARCHAR(50),
+password VARCHAR(128) NOT NULL,
+birthday DATE,
+mail VARCHAR (50) UNIQUE NOT NULL,
+description VARCHAR (300) 
+);
+
+CREATE TABLE topics ( 
+id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+image VARCHAR(50),
+description VARCHAR(100),
+tag VARCHAR(20),
+user_id INT UNSIGNED,
+FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE article (
+id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+content VARCHAR(4000),
+visible BOOLEAN NOT NULL,
+published BOOLEAN NOT NULL, -- >>REVISAR SI ES ASI U OTRA MANERA<<
+topic_id INT UNSIGNED,
+FOREIGN KEY (topic_id) REFERENCES topics (id),
+user_id INT UNSIGNED,
+FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- a implementar como extra si me queda tiempo
+CREATE TABLE comments (
+id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+text VARCHAR(200),
+like BOOLEAN,
+article_id INT UNSIGNED,
+FOREIGN KEY (article_id) REFERENCES articles (id),
+user_id INT UNSIGNED,
+FOREIGN KEY (user_id) REFERENCES users (id),
+root_comment_id INT UNSIGNED,
+FOREIGN KEY (root_comment_id) REFERENCES comments (id)
+);
+

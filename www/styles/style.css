@@ -24,10 +24,22 @@ a {
 li {
     list-style: none;
 }
-
-.index {
-    background-color: #0086b3;
+#logo {
+    width: 400px;
 }
+.index {
+    display: flex;
+    flex-direction: column;
+    background-color: #0086b3;
+    align-items: center;
+}
+
+.log-in-menu {
+    flex-grow: 1;
+    width: 50vh;
+    
+}
+
 
 header {
     text-align: center;
@@ -37,7 +49,6 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 100px;
     list-style: none;
 }
 .interaction li {
@@ -49,6 +60,7 @@ header {
     border-bottom-right-radius: 90px; 
     border-top-left-radius: 90px;
     border-bottom-left-radius: 90px;
+    box-shadow: 10px 10px 10px rgb(1, 13, 19, 0.7);
     background-color: whitesmoke;
     font-size: 30px;
     padding: 15px 100px;
@@ -61,6 +73,7 @@ header {
     border-top-left-radius: 90px;
     border-bottom-left-radius: 90px;
     background-color: rgb(245, 221, 4);
+    box-shadow: 10px 10px 10px rgb(1, 13, 19, 0.7);
     padding: 10px 70px;
     font-size: 20px;
     color: black;
@@ -102,13 +115,19 @@ header {
 
 /* ||||||||||||||||||||||||||||||||||||| REGISTRO |||||||||||||||||||||||||||||||||||||||||||||||||||||| */
 
+
 .register-form {
-    margin: 5vh;
+    display: flex;
+    flex-direction: column;
+    
+    align-items: center;
 }
 
-
 .register-form li {
-    margin: 1vh 40vh;
+    
+    margin: 1vh ;
+    max-width: 70vh ;
+   
     
 }
 .theme {
@@ -200,19 +219,17 @@ header {
 
 .feed {
     display: flex;
+    background-color: whitesmoke;
 }
 .main-articles {
     flex-grow: 1;
 }
 .articles {
-    border-top-right-radius: 90px;
-    border-bottom-right-radius: 90px; 
-    border-top-left-radius: 90px;
-    border-bottom-left-radius: 90px;
+   
     font-size: 20px;
     padding: 20px;
     margin: 20px;
-    border: 1px solid green;
+    border-bottom: 1px solid gray;
 }
 
 
@@ -224,27 +241,25 @@ header {
     
 
 }
+.hidden-menu {
+    position: absolute;
+    z-index: 999;
+    background-color: #0086b3;
+    padding: 20px 50px;
+    list-style: none;
+    visibility: hidden;
+    
+}
 
-.star-opinions {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid red;
-    align-items: center;
-    max-width: 300px;
-}
-.star-choices {
-    border-top-right-radius: 90px;
-    border-bottom-right-radius: 90px; 
-    border-top-left-radius: 90px;
-    border-bottom-left-radius: 90px;
-    padding: 20px;
-    background-color: whitesmoke;
-    margin: 20px;
-    border: 1px solid green;
-}
+/* .hidden {
+    visibility: hidden;
+} */
+
 
 .redact {
-    position: relative;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     padding : 12px 25px;
     background-color: #0086b3;
     color: whitesmoke;
