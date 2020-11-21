@@ -32,8 +32,8 @@ async function createUser(req, res) {
         });
         await userSchema.validateAsync({ username, mail, password });
 
-        const mailConfirm = 'SELECT * FROM users WHERE mail = ?';
-        const [users] = await database.pool.query(mailConfirm, mail);
+        const dataConfirm = 'SELECT * FROM users WHERE mail = ?';
+        const [users] = await database.pool.query(dataConfirm, mail);
 
         if (users.length) {
             const err = new Error('Ya existe un usuario registrado con ese email');
@@ -80,30 +80,14 @@ async function login(req, res) {
 
         await schema.validateAsync({ mail, username, password });
 
-        let [result] = [];
+        const [result] = await database.pool.query('SELECT * FROM users WHERE mail = ? OR username = ?', [mail, username]);
 
-        if (mail && mail.length > 0) {
-            console.log('usuario introduce mail');
-
-            result = await database.pool.query('SELECT * FROM users WHERE mail = ?', [mail]);
-            /* console.log('resultado:', result[0]); */
-
-            if (!result || !result.length) {
-                const error = new Error('El usuario no existe, o has introducido mal la dirección de email');
-                error.code = 404;
-                throw error;
-            }
-        } else {
-            console.log('usuario introduce username');
-            result = await database.pool.query('SELECT * FROM users WHERE username = ?', [username]);
-
-            if (!result || !result.length) {
-                const error = new Error('El usuario no existe, o has introducido mal el nombre de usuario');
-                error.code = 404;
-                throw error;
-            }
+        if (!result || !result.length) {
+            const error = new Error('El usuario no existe, o has introducido mal la dirección de email o el usuario');
+            error.code = 404;
+            throw error;
         }
-        console.log('resultado:', result[0]);
+
         const user = result[0];
 
         const isValidPassword = await bcrypt.compare(password, user.password);
@@ -121,11 +105,7 @@ async function login(req, res) {
             process.env.JWT_SECRET,
             { expiresIn: '30d' },
         );
-        res
-/*             .header({ Authorization: 'Bearer ' + token })
- */            .send({ token });
-
-
+        res.header({ Authorization: 'Bearer ' + token }).send({ token });
 
     } catch (err) {
         res.status(500);
@@ -137,38 +117,20 @@ async function login(req, res) {
 async function editProfile(req, res) {
 
     try {
-        const { username, name, image, password, birthday, description } = req.body;
         const { id } = req.params;
-        const insertQuery = ('UPDATE users VALUES (?, ?, ?, ?, ?, ?) WHERE id = ?', id);
+        const { name, image, description } = req.body;
 
-        const userSchema = joi.object({
-            username: joi.string().max(15),
+        const schema = joi.object({
             name: joi.string(),
             image: joi.string(),
-            password: joi.string().min(6).max(20),
-            birthday: joi.string(),
             description: joi.string().min(20).max(300)
         });
 
-        await userSchema.validateAsync({ username, name, image, password, birthday, description });
-        const mailConfirm = 'SELECT mail FROM users WHERE id = ?'
+        await schema.validateAsync({ name, image, description });
 
+        const updateQuery = ('UPDATE users SET name = ?, image = ?, description = ? WHERE id = ?');
 
-        if (!mailConfirm || !mailConfirm.length) {
-            const err = new Error('Ya existe un usuario registrado con ese email');
-            err.code = 409;
-            throw err;
-        }
-
-        const userNameConfirm = 'SELECT username FROM users WHERE id = ?'
-
-        if (!userNameConfirm || !userNameConfirm.length) {
-            const err = new Error('Ya existe un usuario registrado con ese nombre de usuario');
-            err.code = 409;
-            throw err;
-        }
-
-        const [change] = await database.pool.query(insertQuery)
+        await database.pool.query(updateQuery, [name, image, description, id]);
 
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, id);
@@ -180,9 +142,41 @@ async function editProfile(req, res) {
         res.send({ error: err.message });
     }
 
+}
+async function editInfo(req, res) {
+
+    try {
+        const { id } = req.params;
+        const { mail, password, username } = req.body;
+
+        const schema = joi.object({
+            mail: joi.string(),
+            password: joi.string(),
+            username: joi.string().min(20).max(300)
+        });
+        const [result] = 'SELECT mail, username, password FROM users WHERE id = ?';
+
+        if(!result || !result.length) {
+
+        }
+
+        await schema.validateAsync({ mail, password, username });
+
+        const updateQuery = ('UPDATE users SET mail = ?, password = ?, username = ? WHERE id = ?');
+
+        await database.pool.query(updateQuery, [mail, password, username, id]);
+
+        const selectQuery = 'SELECT * FROM users WHERE id = ?';
+        const [selectRows] = await database.pool.query(selectQuery, id);
+
+        res.send(selectRows[0]);
+    }
+    catch (err) {
+        res.status(500);
+        res.send({ error: err.message });
+    }
 
 }
-
 
 // Exportaciones.
 
@@ -191,5 +185,6 @@ module.exports = {
     createUser,
     editProfile,
     login,
+    editInfo,
 
 }

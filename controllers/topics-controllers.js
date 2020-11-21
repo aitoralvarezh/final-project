@@ -40,12 +40,13 @@ async function addTopic(req, res) {
 
 
 
-// 2. Get topics -------------------------------------------------------------------------------------------------------|
+// 2. Get topics -----------------------------------------------------------------------------------------------------------------|
 
 async function getTopics(req, res) {
     try {
-        const topics = 'SELECT * FROM topics';
-        res.send(topics[0])
+        const [topics] =  await database.pool.query('SELECT * FROM topics');
+       
+        res.send(topics)
     } catch (error) {
         res.status(500);
         res.send({ error: error.message })
