@@ -114,10 +114,12 @@ async function login(req, res) {
 
 }
 
+// 4. Edicion de perfil----------------------------------------------------------------------------------------------|
+
 async function editProfile(req, res) {
 
     try {
-        const { id } = req.params;
+        const { id } = req.auth;
         const { name, image, description } = req.body;
 
         const schema = joi.object({
@@ -143,10 +145,12 @@ async function editProfile(req, res) {
     }
 
 }
+
+
 async function editInfo(req, res) {
 
     try {
-        const { id } = req.params;
+        const { id } = req.auth;
         const { mail, password, username } = req.body;
 
         const schema = joi.object({
@@ -156,7 +160,7 @@ async function editInfo(req, res) {
         });
         const [result] = 'SELECT mail, username, password FROM users WHERE id = ?';
 
-        if(!result || !result.length) {
+        if (!result || !result.length) {
 
         }
 
@@ -178,6 +182,22 @@ async function editInfo(req, res) {
 
 }
 
+// ?. Eliminar a un usuario.
+
+async function deleteProfile(req, res) {
+    try {
+        const { id } = req.params;
+
+        const closeAccount = await database.pool.query('DELETE * FROM users WHERE id = ?', id);
+
+        res.send(closeAccount[0]);
+    }
+    catch (error) {
+        res.status(500);
+        res.send({ error: error.message })
+    }
+}
+
 // Exportaciones.
 
 module.exports = {
@@ -186,5 +206,6 @@ module.exports = {
     editProfile,
     login,
     editInfo,
+    deleteProfile,
 
 }

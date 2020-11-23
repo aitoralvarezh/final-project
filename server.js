@@ -6,8 +6,8 @@ const bodyParser = require('body-parser');
 
 const { usersControllers, articleControllers, topicsControllers, commentsControllers } = require('./controllers');
 
-/* const { validateAuthotisation } = require('./middlewares'); */
-
+const { validateAuthorization } = require('./middlewares');
+ 
 const { HTTP_PORT } = process.env;
 
 const app = express();
@@ -24,19 +24,25 @@ app.use(bodyParser.json());
 // ---Usuarios.
 
 app.get('/api/users', usersControllers.getUsers);
+/* app.get('/api/users/:id', usersControllers.getUserById);*/
 app.post('/api/users', usersControllers.createUser);
-app.post('/api/users/login', usersControllers.login)
-app.put('/api/users/:id', usersControllers.editProfile)
+app.post('/api/users/login', usersControllers.login);
+app.put('/api/users/profile', validateAuthorization, usersControllers.editProfile);
+app.put('/api/users/info/:id', validateAuthorization, usersControllers.editInfo)
+app.delete('/api/users', validateAuthorization, usersControllers.deleteProfile)
 
 
 
 // ---Temas.
 
 app.post('/api/topics', topicsControllers.addTopic);
-app.get('/api/topics', topicsControllers.getTopics)
+app.get('/api/topics', topicsControllers.getTopics);
+app.put('/api/topics/:id', topicsControllers.editTopics);
 
 // ---Artículos.
 
+app.get('/api/articles', articleControllers.getArticles);
+app.get('/api/articles/:id', articleControllers.getArticleById)
 
 
 // ---Comentarios.
