@@ -10,6 +10,7 @@ const jwt = require('jsonwebtoken');
 
 async function addTopic(req, res) {
     try {
+        const { id } = req.auth;
         const { name, description, tag, image } = req.body;
         const topicSchema = joi.object({
             name: joi.string().required(),
@@ -28,7 +29,7 @@ async function addTopic(req, res) {
         }
 
         const insertQuery = 'INSERT INTO topics(name, description, tag, image) VALUES (?, ?, ?, ?)';
-        const [rows] = await database.pool.query(insertQuery, [name, description, tag, image]);
+        const [rows] = await database.pool.query(insertQuery, [id, name, description, tag, image]);
 
         const createId = rows.insertId;
 

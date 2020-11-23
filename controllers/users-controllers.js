@@ -114,12 +114,13 @@ async function login(req, res) {
 
 }
 
-// 4. Edicion de perfil----------------------------------------------------------------------------------------------|
+// 4. Edición de perfil----------------------------------------------------------------------------------------------|
 
 async function editProfile(req, res) {
 
     try {
         const { id } = req.auth;
+        console.log('el id de usuario es:', id);
         const { name, image, description } = req.body;
 
         const schema = joi.object({
@@ -147,28 +148,22 @@ async function editProfile(req, res) {
 }
 
 
-async function editInfo(req, res) {
+async function changePassword(req, res) {
 
     try {
         const { id } = req.auth;
-        const { mail, password, username } = req.body;
+        const { password } = req.body;
 
         const schema = joi.object({
-            mail: joi.string(),
             password: joi.string(),
-            username: joi.string().min(20).max(300)
         });
-        const [result] = 'SELECT mail, username, password FROM users WHERE id = ?';
-
-        if (!result || !result.length) {
-
-        }
+        const [result] = 'SELECT password FROM users WHERE id = ?';
 
         await schema.validateAsync({ mail, password, username });
 
-        const updateQuery = ('UPDATE users SET mail = ?, password = ?, username = ? WHERE id = ?');
+        const updateQuery = ('UPDATE users SET password = ? WHERE id = ?');
 
-        await database.pool.query(updateQuery, [mail, password, username, id]);
+        await database.pool.query(updateQuery, [password, id]);
 
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, id);
@@ -186,9 +181,21 @@ async function editInfo(req, res) {
 
 async function deleteProfile(req, res) {
     try {
-        const { id } = req.params;
+        const { id } = req.auth;
+        const { password } = req.body;
+        //const userPassword = ???????????????????????;
+        const schema = joi.object({
+            password: joi.string().required()
+        });
+        await schema.validateAsync({ password });
 
-        const closeAccount = await database.pool.query('DELETE * FROM users WHERE id = ?', id);
+        if (!password  || password !== userPassword) {
+            const error = new Error('La contraseña no es correcta');
+            error.code = 401;
+            throw error;
+        }
+
+        const closeAccount = await database.pool.query('DELETE FROM users WHERE id = ? AND password = ?', [id, password]);
 
         res.send(closeAccount[0]);
     }
@@ -205,7 +212,7 @@ module.exports = {
     createUser,
     editProfile,
     login,
-    editInfo,
+    changePassword,
     deleteProfile,
 
 }

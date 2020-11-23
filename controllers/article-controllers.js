@@ -43,26 +43,37 @@ async function getArticleById(req, res) {
 
 async function createArticles(req, res) {
     try {
-
+        const { userId } = req.auth;
+        const { topicId } = req.params
         const { title, content, visible } = req.body;
 
         const schema = joi.object({
-            tittle: joi.string().required(),
+            title: joi.string().required(),
             content: joi.string().required(),
-            visible: joi.boolean(),
+            visible: joi.boolean()
         });
 
-        await schema.validateasync({ title, content, visible });
+        await schema.validateAsync({ title, content, visible });
 
-        const userId = req.auth.id;
+        const selectTopic = await database.pool.query('SELECT * FROM topics');
 
-        const result = await database.pool.query('INSERT INTO articles (title, content, visible, user_id) VALUES (?, ?, ?, ?)', [tittle, content, visible, user])
+        if (!selectTopic || !selectTopic.lenght) {
+            const error = new Error('El tema seleccionado no existe');
+            error.code = 404;
+            throw error;
+        }
 
+        const createArticle = await database.pool.query('INSERT INTO articles (user_id, topic_id. title, content, visible, user_id) VALUES (?, ?, ?, ?, ?, ?)', [userId, topicId, title, content, visible])
 
+        const { insertId } = createArticle;
 
+        const selectQuery = await database.pool.query('SELECT * FROM articles WHERE id = ?', insertId);
 
+        res.status(201);
+        res.send(selectQuery[0]);
     } catch (error) {
-
+        res.status(500);
+        res.send({ error: error.message })
     }
 }
 

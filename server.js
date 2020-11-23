@@ -28,21 +28,22 @@ app.get('/api/users', usersControllers.getUsers);
 app.post('/api/users', usersControllers.createUser);
 app.post('/api/users/login', usersControllers.login);
 app.put('/api/users/profile', validateAuthorization, usersControllers.editProfile);
-app.put('/api/users/info/:id', validateAuthorization, usersControllers.editInfo)
-app.delete('/api/users', validateAuthorization, usersControllers.deleteProfile)
+app.put('/api/users/chanhepassword', validateAuthorization, usersControllers.changePassword)
+app.delete('/api/users/deleteaccount', validateAuthorization, usersControllers.deleteProfile)
 
 
 
 // ---Temas.
 
-app.post('/api/topics', topicsControllers.addTopic);
+app.post('/api/topics/', validateAuthorization, topicsControllers.addTopic);
 app.get('/api/topics', topicsControllers.getTopics);
-app.put('/api/topics/:id', topicsControllers.editTopics);
+app.put('/api/topics/:id', validateAuthorization, topicsControllers.editTopics);
 
 // ---Artículos.
 
 app.get('/api/articles', articleControllers.getArticles);
-app.get('/api/articles/:id', articleControllers.getArticleById)
+app.get('/api/articles/:id', articleControllers.getArticleById);
+app.post('/api/articles/writearticle/', validateAuthorization, articleControllers.createArticles);
 
 
 // ---Comentarios.

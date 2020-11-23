@@ -15,14 +15,14 @@ async function validateAuthorization(req, res, next) {
 
         const token = authorization.slice(7, authorization.length);
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
+        console.log('contenido del token decodificado:', decodedToken);
         // Comprobamos que el usuario para el que fue emitido
         // el token todavía existe.
         const query = 'SELECT * FROM users WHERE id = ?';
         const [users] = await database.pool.query(query, decodedToken.id);
 
         if (!users || !users.length) {
-            const error = new Error('El usuario ya no existe');
+            const error = new Error( 'Authorization: el usuario no existe');
             error.code = 401;
             throw error;
         }
