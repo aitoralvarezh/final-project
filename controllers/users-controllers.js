@@ -183,7 +183,6 @@ async function deleteProfile(req, res) {
     try {
         const { id } = req.auth;
         const { password } = req.body;
-        //const userPassword = ???????????????????????;
         const schema = joi.object({
             password: joi.string().required()
         });
