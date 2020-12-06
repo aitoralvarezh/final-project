@@ -1,0 +1,14 @@
+@font-face { font-family: 'comfortaa'; src: url('./fonts/comfortaa_bold-webfont.woff') format('woff2'), url('./fonts/comfortaa_bold-webfont.woff') format('woff'); font-weight: bold; font-style: normal;}
+@font-face {font-family: 'comfortaa'; src: url('./fonts/comfortaa_regular-webfont.woff') format('woff2'), url('./fonts/comfortaa_regular-webfont.woff') format('woff');font-weight: normal; font-style: normal;}
+
+
+body { 
+  font-family: 'comfortaa';
+  margin: 0;
+  background-color: whitesmoke;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
