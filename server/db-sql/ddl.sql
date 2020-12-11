@@ -12,12 +12,25 @@ role VARCHAR(50) DEFAULT'user',
 description VARCHAR (300)
 );
 
+CREATE TABLE articles (
+id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+title VARCHAR(100) NOT NULL,
+content VARCHAR(4000),
+visible BOOLEAN NOT NULL,
+image VARCHAR(200)
+topic_id INT UNSIGNED,
+FOREIGN KEY (topic_id) REFERENCES topics(id),
+user_id INT UNSIGNED,
+FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 CREATE TABLE topics ( 
 id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(60),
 image VARCHAR(50),
 description VARCHAR(100),
-tag VARCHAR(20)
+tag VARCHAR(100)
 );
 
 CREATE TABLE users_and_topics (
@@ -28,17 +41,6 @@ user_id INT UNSIGNED,
 FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE articles (
-id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-title VARCHAR(100) NOT NULL,
-content VARCHAR(4000),
-visible BOOLEAN NOT NULL,
-topic_id INT UNSIGNED,
-FOREIGN KEY (topic_id) REFERENCES topics(id),
-user_id INT UNSIGNED,
-FOREIGN KEY (user_id) REFERENCES users(id)
-);
 
 -- a implementar como extra si me queda tiempo
 CREATE TABLE comments (

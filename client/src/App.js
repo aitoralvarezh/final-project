@@ -1,30 +1,54 @@
 import { Switch, Route } from 'react-router-dom';
-import ReadArticle from './articles/readarticle';
-import SelectedArticle from './articles/selectedarticle'
+
 import './App.css';
-import Header from './header'
-import Topics from './topics/topics'
+import Header from './header';
 import MainPage from './landing';
+
+// USERS
+import Login from './routes/users/register-login/login';
+import Register from './routes/users/register-login/register';
+import EditProfile from './routes/users/user-menu/users';
+import Presentation from './presentation'
+
+//ARTICLES
+import SelectedArticle from './routes/articles/selectedarticle'
+import ReadArticle from './routes/articles/readarticle';
+
+//TOPICS
+import Topics from './routes/topics/topics'
+
 
 function App() {
   return (
     <div className="App">
-      <Header />
+
+      {/* <Header />
+ */}
       <Switch>
+        <Route path="/users/me">
+          <EditProfile />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
         <Route path="/articles/:id">
-          <SelectedArticle />         
+          <SelectedArticle />
         </Route>
         <Route path="/topics">
-          <Topics />         
+          <Topics />
         </Route>
         <Route path="/articles">
-          <ReadArticle />         
+          <ReadArticle />
         </Route>
         <Route path="/">
-          <MainPage />         
+          <Presentation />
         </Route>
+       
       </Switch>
-  
+
     </div>
   );
 }

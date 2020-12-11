@@ -29,7 +29,7 @@ async function addTopic(req, res) {
         }
 
         const insertQuery = 'INSERT INTO topics(name, description, tag, image) VALUES (?, ?, ?, ?)';
-        const [rows] = await database.pool.query(insertQuery, [id, name, description, tag, image]);
+        const [rows] = await database.pool.query(insertQuery, [name, description, tag, image]);
 
         const createId = rows.insertId;
 

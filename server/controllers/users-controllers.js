@@ -2,6 +2,12 @@ const { database } = require('../structure');
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs').promises;
+const path = require('path')
+
+function home(req, res) {
+    res.send('This is the file upload backend demo! Use your frontend to access it.')
+}
 
 
 
@@ -59,7 +65,15 @@ async function createUser(req, res) {
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, createId);
 
-        res.send(selectRows[0]);
+        res.header({ Authorization: 'Bearer ' + token }).send({ token });
+
+        const token = jwt.sign(
+            tokenPayload,
+            process.env.JWT_SECRET,
+            { expiresIn: '30d' },
+        );
+        res.header({ Authorization: 'Bearer ' + token }).send({ token }, ...selectRows[0]);
+
 
     } catch (err) {
         res.status(500);
@@ -105,7 +119,7 @@ async function login(req, res) {
             process.env.JWT_SECRET,
             { expiresIn: '30d' },
         );
-        res.header({ Authorization: 'Bearer ' + token }).send({ token });
+        res.header({ Authorization: 'Bearer ' + token }).send({ token, user });
 
     } catch (err) {
         res.status(500);
@@ -121,19 +135,33 @@ async function editProfile(req, res) {
     try {
         const { id } = req.auth;
         console.log('el id de usuario es:', id);
-        const { name, image, description } = req.body;
+        const { name, description } = req.body;
 
         const schema = joi.object({
             name: joi.string(),
-            image: joi.string(),
             description: joi.string().min(20).max(300)
         });
+        await schema.validateAsync({ name, description });
 
-        await schema.validateAsync({ name, image, description });
+        let imageName;
 
-        const updateQuery = ('UPDATE users SET name = ?, image = ?, description = ? WHERE id = ?');
+        if (req.file) {
+            imageName = 'user-' + id + '-' + req.file.originalname;
+            await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
+            imageName = ('http://localhost:3000/static/' + imageName);
+        }
 
-        await database.pool.query(updateQuery, [name, image, description, id]);
+        if (imageName) {
+
+            await database.pool.query('UPDATE users SET name = ?, image = ?, description = ? WHERE id = ?',
+                [name, imageName, description, id]);
+
+        } else {
+            await database.pool.query('UPDATE users SET name = ?, description = ? WHERE id = ?',
+                [name, description, id]);
+        }
+
+
 
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, id);
@@ -188,7 +216,7 @@ async function deleteProfile(req, res) {
         });
         await schema.validateAsync({ password });
 
-        if (!password  || password !== userPassword) {
+        if (!password || password !== userPassword) {
             const error = new Error('La contraseña no es correcta');
             error.code = 401;
             throw error;

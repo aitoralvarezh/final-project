@@ -1,6 +1,5 @@
-@font-face { font-family: 'comfortaa'; src: url('./fonts/comfortaa_bold-webfont.woff') format('woff2'), url('./fonts/comfortaa_bold-webfont.woff') format('woff'); font-weight: bold; font-style: normal;}
-@font-face {font-family: 'comfortaa'; src: url('./fonts/comfortaa_regular-webfont.woff') format('woff2'), url('./fonts/comfortaa_regular-webfont.woff') format('woff');font-weight: normal; font-style: normal;}
-
+@font-face { font-family: 'comfortaa'; src: url('./routes/fonts/comfortaa_bold-webfont.woff') format('woff2'), url('./routes/fonts/comfortaa_bold-webfont.woff') format('woff'); font-weight: bold; font-style: normal;}
+@font-face {font-family: 'comfortaa'; src: url('./routes/fonts/comfortaa_regular-webfont.woff') format('woff2'), url('./routes/fonts/comfortaa_regular-webfont.woff') format('woff');font-weight: normal; font-style: normal;}
 
 body { 
   font-family: 'comfortaa';

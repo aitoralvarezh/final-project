@@ -1,19 +1,24 @@
 import './header.css'
 import { Link } from 'react-router-dom'
+import { useUser } from './usercontext';
+import LoginButton from './routes/users/user-menu/login-menu';
+import { useState } from 'react';
 
 function Header() {
-    const menu = ['topics', 'Logo', 'Perfil']
+   
 
     return (
         <div className="header">
-            {menu.map(tabs =>
-                <div
-                    key={tabs}
-                    className="tab"
-                >
-                    <Link to={`/${tabs}`}>{tabs}</Link>
-                </div>
-            )}
+            <div className="tab">
+                <Link to="/topics">Temas</Link>
+            </div>
+            <div className="tab">
+                <Link to="/">Home</Link>
+            </div>
+            <Link to="/users/me">
+              <LoginButton />
+            </Link>
+
         </div>
     )
 }

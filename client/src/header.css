@@ -1,17 +1,10 @@
 .header {
-    box-shadow: 10px 10px 10px rgba(28, 43, 119, 0.5);
-    border-bottom: 1px solid rgb(42, 46, 68);
-    background-color: #0086b3;
-    width: 100%;
+    border-bottom: 1px solid lightgray;
+    background-color: whitesmoke;
     height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-a {
-    text-decoration: none;
-    color: whitesmoke;
 }
 
 .tab{
@@ -19,3 +12,34 @@ a {
     cursor: pointer;
     padding: 20px;
 }
+
+.tab a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
+
+.header .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: black;
+    font-size: 20px;
+    color: black;
+}
+.name {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.avatar {
+    border: 2px solid lightgray;
+    background-size: cover;
+    padding: 10px;
+    border-radius: 50%;
+    margin-right: 50px;
+    height: 50px;
+    width: 50px;
+  }
+  

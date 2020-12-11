@@ -43,7 +43,8 @@ async function getArticleById(req, res) {
 
 async function createArticles(req, res) {
     try {
-        const { userId } = req.auth;
+        const { id } = req.auth;
+        console.log('vista:', req.auth);
         const { title, content, visible, topicId } = req.body;
 
         const schema = joi.object({
@@ -65,13 +66,34 @@ async function createArticles(req, res) {
             throw error;
         }
 
-        const [createArticle] = await database.pool.query(`INSERT INTO articles 
-        (user_id, topic_id, title, content, visible) 
-        VALUES (?, ?, ?, ?, ?)`,
-            [userId, topicId, title, content, visible])
 
-        console.log(userId);
-        const createId = createArticle.insertId;
+        let imageName;
+        let createId;
+
+        if (req.file) {
+            imageName = 'article-' + id + '-' + req.file.originalname;
+            await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
+            imageName = ('http://localhost:3000/static/' + imageName);
+        }
+
+        if (imageName) {
+
+            const [createArticle] = await database.pool.query(`INSERT INTO articles 
+            (user_id, topic_id, image, title, content, visible) 
+            VALUES (?, ?, ?, ?, ?, ?)`,
+                [id, topicId, title, content, visible])
+            createId = createArticle.insertId;
+        } else {
+            const [createArticle] = await database.pool.query(`INSERT INTO articles 
+            (user_id, topic_id, title, content, visible) 
+            VALUES (?, ?, ?, ?, ?)`,
+                [id, topicId, title, content, visible])
+            createId = createArticle.insertId;
+
+        }
+
+
+
         const selectQuery = await database.pool.query('SELECT * FROM articles WHERE id = ? ', createId);
 
         res.status(201);
@@ -82,9 +104,30 @@ async function createArticles(req, res) {
     }
 }
 
+
+async function getArticlesByTopic(req, res) {
+    try {
+
+        const { id: topicId } = req.params;
+
+        const [selectQuery] = await database.pool.query('SELECT * FROM articles WHERE topic_id = ?', topicId);
+
+        res.status(201);
+        res.send(selectQuery);
+
+    } catch (error) {
+        console.log(error)
+        res.status(500)
+        res.send({
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     getArticles,
     getArticleById,
     createArticles,
+    getArticlesByTopic
 
 }
