@@ -17,10 +17,7 @@ function Presentation() {
   if (!me) {
     return (
       <div>
-        {isRegister ? <Register /> : <Login />}
-        <div onClick={() => setRegister(!isRegister)} className="toggle">
-          {isRegister ? 'Ya tienes cuenta? Logeate' : 'No tienes cuenta? Registrate'}
-        </div>
+       <MainPage />
       </div>
     )
   }
@@ -28,14 +25,11 @@ function Presentation() {
   return (
     <div className="page users">
       <main>
-        <Header />
+       
         <Switch>
-          <Route path="/articles">
-            <ReadArticle />
-          </Route>
           <Route path="/">
             <MainPage />
-          </Route>
+          </Route>          
         </Switch>
       </main>
     </div>

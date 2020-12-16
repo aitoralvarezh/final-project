@@ -1,0 +1,38 @@
+.menu {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* añadir MediaQuery */
+
+.select  div {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+
+    display: flex;
+    width: 100px;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 30px 10px;
+    padding: 10px;
+    align-items:center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.normal {
+    justify-content: space-between;
+    background-color: #0086b3;
+    color:whitesmoke
+}
+
+.active {
+    background-color: yellow;
+}
+
+.selection {
+    flex-grow: 1;
+}

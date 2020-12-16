@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useArticles } from '../../api';
+import { useSelectedTopicArticles } from '../../api';
 import './readarticle.css'
 
 function ReadArticle() {
 
-    const articles = useArticles();
+    const articles = useSelectedTopicArticles();
     if (!articles) return 'Loading...'
 
     return (
@@ -15,8 +15,8 @@ function ReadArticle() {
                 to={`/articles/${article.id}`}
                 >
                     <div className="article-box">
-                        <div className="main-article-img">
-                            {article.content}
+                        <div className="article-img">
+                            {article.user_id}
                         </div>
                         <div className="article-title">
                             {article.title}

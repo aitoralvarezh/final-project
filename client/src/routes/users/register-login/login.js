@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSetUser, useUser } from '../../../usercontext';
 import { login } from '../../../api'
+import './display.css'
 
 function Login() {
     const me = useUser()
@@ -15,13 +16,12 @@ function Login() {
         const data = await login(username, password, mail);
         if (data.token) {
             setMe(data)
-                    
+
         } else {
             setError(true)
         }
-       
     }
-    
+
     if (!setMe) {
         return 'loading...'
     }
@@ -30,21 +30,29 @@ function Login() {
         <div className="login">
             <form onSubmit={handleSubmit}>
                 <label>
-                    Nombre de usuario
-                    <input value={username} onChange={e => setusername(e.target.value)} />
+                    <div className="name">Nombre de usuario</div>
+                    <input
+                        autoFocus
+                        placeholder="Usuario..."
+                        value={username}
+                        onChange={e => setusername(e.target.value)}
+                    />
                 </label>
                 <label>
-                    Contraseña
+                    <div className="name">Contraseña</div>
                     <input
                         type="password"
-                        value={password} onChange={e => setPassword(e.target.value)} />
+                        placeholder="Contraseña..."
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                    />
                 </label>
                 {isError &&
                     <div className="error">
                         Error de login
                 </div>
                 }
-                <button>Inicia sesión</button>
+                <button className="log-in-out">Inicia sesión</button>
             </form>
         </div>
     )

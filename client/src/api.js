@@ -4,6 +4,7 @@ export const useTopics = () => useFetch('http://localhost:3000/api/topics');
 
 export const useArticles = () => useFetch('http://localhost:3000/api/articles');
 
+export const useSelectedTopicArticles = () => useFetch('http://localhost:3000/api/articles/following');
 
 export const userData = async (token, image, name, description) => {
 
@@ -19,10 +20,7 @@ export const userData = async (token, image, name, description) => {
     })
     const data = await ret.json();
     return data;
-
-
 }
-
 
 export const register = async (username, password, mail) => {
     const ret = await fetch('http://localhost:3000/api/register', {

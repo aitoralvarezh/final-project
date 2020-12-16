@@ -43,3 +43,14 @@
     width: 50px;
   }
   
+  .log-in-out {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+
+    border: 1px solid gray;
+    padding: 5px;
+    outline: none;
+    cursor: pointer;
+}

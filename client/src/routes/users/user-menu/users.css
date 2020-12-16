@@ -1,0 +1,72 @@
+.hide {
+   width: 0;
+}
+
+.showAvatar {
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+
+.profile-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    margin-top: 30px;
+}
+
+.data-input {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 450px;    
+}
+
+.data-input label {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+    border: solid 1px lightgray;
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    padding: 20px;
+    background-color: whitesmoke;
+}
+
+label .name {
+    flex-grow: 1;
+}
+
+label input {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+    padding: 3px;
+    outline: none;
+}
+
+.save {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+
+    background-color: #0086b3;
+    color: whitesmoke;
+    font-size: large;
+    cursor: pointer;
+    padding: 7px;
+    border: none;
+    outline: none;
+    
+}
+.save:hover {
+    background-color: rgb(75, 185, 12);
+    transition: ease-in-out 0.2s;
+}
+

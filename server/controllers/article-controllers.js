@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 
 async function getArticles(req, res) {
     try {
-        const [articles] = await database.pool.query('SELECT * FROM articles')
+        const [articles] = await database.pool.query('SELECT * FROM articles ORDER BY date DESC')
         res.send(articles)
     } catch (error) {
         res.status(500);
@@ -44,7 +44,6 @@ async function getArticleById(req, res) {
 async function createArticles(req, res) {
     try {
         const { id } = req.auth;
-        console.log('vista:', req.auth);
         const { title, content, visible, topicId } = req.body;
 
         const schema = joi.object({
@@ -52,7 +51,6 @@ async function createArticles(req, res) {
             content: joi.string().required(),
             visible: joi.boolean(),
             topicId: joi.required()
-
         });
 
         await schema.validateAsync({ title, content, visible, topicId });
@@ -66,35 +64,15 @@ async function createArticles(req, res) {
             throw error;
         }
 
+        const [createArticle] = await database.pool.query(`INSERT INTO articles 
+        (user_id, topic_id, title, content, visible) 
+        VALUES (?, ?, ?, ?, ?)`,
+            [id, topicId, title, content, visible])
 
-        let imageName;
-        let createId;
+        const createId = createArticle.insertId;
+        const selectQuery = await database.pool.query('SELECT * FROM articles WHERE id = ?', createId);
 
-        if (req.file) {
-            imageName = 'article-' + id + '-' + req.file.originalname;
-            await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
-            imageName = ('http://localhost:3000/static/' + imageName);
-        }
-
-        if (imageName) {
-
-            const [createArticle] = await database.pool.query(`INSERT INTO articles 
-            (user_id, topic_id, image, title, content, visible) 
-            VALUES (?, ?, ?, ?, ?, ?)`,
-                [id, topicId, title, content, visible])
-            createId = createArticle.insertId;
-        } else {
-            const [createArticle] = await database.pool.query(`INSERT INTO articles 
-            (user_id, topic_id, title, content, visible) 
-            VALUES (?, ?, ?, ?, ?)`,
-                [id, topicId, title, content, visible])
-            createId = createArticle.insertId;
-
-        }
-
-
-
-        const selectQuery = await database.pool.query('SELECT * FROM articles WHERE id = ? ', createId);
+        console.log('Fran dame duro', createArticle[0])
 
         res.status(201);
         res.send(selectQuery[0]);
@@ -107,13 +85,19 @@ async function createArticles(req, res) {
 
 async function getArticlesByTopic(req, res) {
     try {
+        //--Devuelve los topics que el usuario sigue
+        const { id } = req.auth;
 
-        const { id: topicId } = req.params;
+        console.log('vista:', req.auth);
 
-        const [selectQuery] = await database.pool.query('SELECT * FROM articles WHERE topic_id = ?', topicId);
+        const selectQuery = await database.pool.query(`SELECT * from articles 
+            WHERE topic_id 
+            IN (SELECT id FROM users_and_topics 
+            WHERE user_id = ?)
+            ORDER BY date DESC`, id);
 
         res.status(201);
-        res.send(selectQuery);
+        res.send(selectQuery[0]);
 
     } catch (error) {
         console.log(error)
@@ -123,6 +107,8 @@ async function getArticlesByTopic(req, res) {
         })
     }
 }
+
+
 
 module.exports = {
     getArticles,

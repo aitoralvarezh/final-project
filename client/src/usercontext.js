@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
     const [me, setMe] = useState(session);
 
     const setMePlus = v => {
-        localStorage.setItem('session', JSON.stringify(v))
+        localStorage.setItem('session', v ? JSON.stringify(v) : 'null')
         setMe(v)
     }
     return (
@@ -19,11 +19,11 @@ const UserProvider = ({ children }) => {
 }
 
 export const useUser = () => {
-    return useContext (UserContext).me
+    return useContext(UserContext).me
 }
 
 export const useSetUser = () => {
-    return useContext (UserContext).setMe
+    return useContext(UserContext).setMe
 }
 
 export default UserProvider;

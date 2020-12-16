@@ -161,8 +161,6 @@ async function editProfile(req, res) {
                 [name, description, id]);
         }
 
-
-
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, id);
 

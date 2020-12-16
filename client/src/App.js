@@ -7,7 +7,7 @@ import MainPage from './landing';
 // USERS
 import Login from './routes/users/register-login/login';
 import Register from './routes/users/register-login/register';
-import EditProfile from './routes/users/user-menu/users';
+import Options from './routes/users/options-menu';
 import Presentation from './presentation'
 
 //ARTICLES
@@ -22,11 +22,11 @@ function App() {
   return (
     <div className="App">
 
-      {/* <Header />
- */}
+      <Header />
+
       <Switch>
         <Route path="/users/me">
-          <EditProfile />
+          <Options />
         </Route>
         <Route path="/register">
           <Register />
@@ -46,7 +46,7 @@ function App() {
         <Route path="/">
           <Presentation />
         </Route>
-       
+
       </Switch>
 
     </div>

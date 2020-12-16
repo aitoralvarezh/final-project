@@ -46,9 +46,9 @@ app.put('/api/topics/:id', validateAuthorization, topicsControllers.editTopics);
 // ---Artículos.
 
 app.get('/api/articles', articleControllers.getArticles);
+app.get('/api/articles/following',validateAuthorization, articleControllers.getArticlesByTopic)
 app.get('/api/articles/:id', articleControllers.getArticleById);
 app.post('/api/articles/writearticle/', validateAuthorization, articleControllers.createArticles);
-app.get('/api/articles/topic/:id', articleControllers.getArticlesByTopic)
 
 
 

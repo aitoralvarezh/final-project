@@ -1,3 +1,7 @@
+a {
+    text-decoration: none;
+  }
+
 .article-box {
     display: flex;
     flex-direction: column;
@@ -8,8 +12,13 @@
     padding: 5px
 }
 
+.article-title  {
+    font-weight: bold;
+    color: black;
+    font-size: large;
+}
 
-.main-article-img {
+.article-img {
     width: 600px;
     height: 300px;
     background-color: yellow;

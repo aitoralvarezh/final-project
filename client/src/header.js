@@ -1,12 +1,11 @@
 import './header.css'
 import { Link } from 'react-router-dom'
-import { useUser } from './usercontext';
-import LoginButton from './routes/users/user-menu/login-menu';
-import { useState } from 'react';
+import { useSetUser } from './usercontext';
+import Account from './routes/users/register-login/login-menu';
 
 function Header() {
-   
 
+    const setMe = useSetUser()
     return (
         <div className="header">
             <div className="tab">
@@ -15,11 +14,12 @@ function Header() {
             <div className="tab">
                 <Link to="/">Home</Link>
             </div>
-            <Link to="/users/me">
-              <LoginButton />
-            </Link>
+            <div>
+                <Account />                
+            </div>
 
-        </div>
+
+        </div >
     )
 }
 

@@ -1,20 +1,26 @@
 import { Link } from 'react-router-dom';
+import { useArticles } from '../../api';
 
 function LastArticles() {
-    const lastArticles = ['hoy', 'ayer', 'la semana pasada']
+    const lastArticles = useArticles();
+
+    if (!lastArticles) return 'Loading...'
+
     return (
         <div>
             {lastArticles.map(article =>
 
-                <Link to="/articles/new/:id"
+                <Link
                     key={article}
+                    to="/articles/new/:id"
                 >
-                    <div className="article-box aside">
-                        <div className="aside-article-img">
+                    <div className="article-box">
+                        <div className="article-img">
                             Imagen
                             </div>
-                        <div className="aside-article-title">
-                            {article}
+                        <div className="article-title">
+                            {article.date}
+                            {article.title}
                         </div>
                     </div>
                 </Link>
