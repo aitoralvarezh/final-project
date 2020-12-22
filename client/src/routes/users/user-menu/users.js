@@ -11,6 +11,7 @@ function EditProfile() {
 
     const [name, setName] = useState(me.name || '')
     const [description, setDescription] = useState(me.description || '')
+    const [preview, setPreview] = useState();
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -22,22 +23,29 @@ function EditProfile() {
             return setMe({ token, user: data })
         }
     }
-    const handlePick = e => {
+    const handleClick = e => {
         theInput.current.click()
+    }
+    const handlePick = e => {
+        const reader = new FileReader()
+        reader.onloadend = () => setPreview(reader.result)
+        reader.readAsDataURL(e.target.files[0])
     }
 
     console.log('editprofile: ', me);
+
+    const style = preview && { backgroundImage: 'url(' + preview + ')' }
 
 
     return (
         <div>
             <form className="profile-form" onSubmit={handleSubmit}>
                 <div
+                    
                     className="avatar showAvatar"
-                    style={{ backgroundImage: 'url(' + me.image + ')' }}
-                    onClick={handlePick}
+                    onClick={handleClick}
+                    style={style}
                 >
-
                 </div>
                 <input
                     className="hide"
@@ -45,6 +53,7 @@ function EditProfile() {
                     type='file'
                     accept="image/*"
                     ref={theInput}
+                    onChange={handlePick}
 
                 />
                 <div className="data-input">

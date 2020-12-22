@@ -1,0 +1,31 @@
+.main-page {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;    
+}
+
+.slides {
+    flex-grow: 1;
+}
+
+
+.arrows {
+    color:whitesmoke;
+    font-weight: thin;
+    font-size: 40px;
+    cursor: pointer;
+    margin: 0 30px;
+    
+}
+
+.arrows:hover {
+    font-size: 50px;
+    transition: ease-in-out 0.3s;
+
+}

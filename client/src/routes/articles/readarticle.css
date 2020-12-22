@@ -4,29 +4,47 @@ a {
 
 .article-box {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid lightgray;
-    margin: 20px 20px;
-    padding: 5px
+    margin: 30px 40px;
+    padding: 10px
 }
 
 .article-title  {
     font-weight: bold;
     color: black;
     font-size: large;
+    flex-grow: 1;
+    margin-left: 20px;
+    flex-grow: 1;
 }
 
 .article-img {
-    width: 600px;
-    height: 300px;
+    width: 400px;
+    height: 200px;
     background-color: yellow;
+    background-size: cover;
 }
 
+.new-articles {
+    width: 100%;
+}
 
-.aside-article-img {
-    width: 250px;
-    height: 140px;
-    background-color: yellow;
+.banner-article {
+    border:none;
+    
+}
+.banner-article .article-title{
+    color:whitesmoke;    
+}
+.article-header-image {
+    background-size: contain;
+    width: 600px;
+    height: 200px;
+}
+.user-image{
+    background-size: contain;
+    width: 100px;  
 }

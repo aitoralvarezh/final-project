@@ -203,6 +203,25 @@ async function changePassword(req, res) {
 
 }
 
+// 5. Selectión de temas por usuario-----------------------------------------------------------------------------------|
+async function selectTopics(req, res) {
+    try {
+        const { id } = req.auth;
+        const { topicId } = req.body;
+        
+        const [insertUserFavs] = await database.pool.query(`INSERT INTO users_and_topics (user_id, topic_id) VALUES (?, ?)`, [id, topicId]);
+        
+        
+        const selectQuery= await database.pool.query('SELECT * from users_and_topics WHERE user_id = ?', id)
+        
+
+        res.send(selectQuery[0]);
+        
+    } catch (err) {
+        res.status(500);
+        res.send({ error: err.message });
+    }
+}
 // ?. Eliminar a un usuario.
 
 async function deleteProfile(req, res) {
@@ -239,5 +258,6 @@ module.exports = {
     login,
     changePassword,
     deleteProfile,
+    selectTopics,
 
 }

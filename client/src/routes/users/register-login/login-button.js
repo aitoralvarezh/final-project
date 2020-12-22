@@ -7,7 +7,7 @@ function Acordeon({children}) {
     return (
         <div className="acordeon log-in-out">
             <Link onClick={() => setShow(!show)}>
-                {show ? 'x' : 'Login'}
+                {show ? 'X' : 'Login'}
             </Link>
 
             {show &&

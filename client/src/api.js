@@ -2,9 +2,29 @@ import useFetch from './usefetch';
 
 export const useTopics = () => useFetch('http://localhost:3000/api/topics');
 
-export const useArticles = () => useFetch('http://localhost:3000/api/articles');
-
 export const useSelectedTopicArticles = () => useFetch('http://localhost:3000/api/articles/following');
+
+export const useArticles = (limit) => useFetch('http://localhost:3000/api/articles?limit=' + limit);
+
+export const useSelectedArticle = (id) => useFetch('http://localhost:3000/api/articles/read/' + id);
+
+export const createArticles = async (token,topicId, image, title, content, visible) => {
+
+    const fd = new FormData()
+    fd.append('topic_id', topicId)
+    fd.append('title', title)
+    fd.append('content', content)
+    fd.append('visible', visible)
+    fd.append('image', image)
+
+    const ret = await fetch('http://localhost:3000/api/articles/writearticle', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token },
+        body: fd
+    })
+    const data = await ret.json();
+    return data;
+}
 
 export const userData = async (token, image, name, description) => {
 

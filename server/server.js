@@ -34,6 +34,7 @@ app.post('/api/login', usersControllers.login);
 app.put('/api/users/me', upload.single('image'), validateAuthorization, usersControllers.editProfile);
 app.put('/api/users/chanhepassword', validateAuthorization, usersControllers.changePassword)
 app.delete('/api/users/deleteaccount', validateAuthorization, usersControllers.deleteProfile)
+app.post('/api/users/topics', validateAuthorization, usersControllers.selectTopics)
 
 
 
@@ -45,10 +46,10 @@ app.put('/api/topics/:id', validateAuthorization, topicsControllers.editTopics);
 
 // ---Artículos.
 
-app.get('/api/articles', articleControllers.getArticles);
+app.post('/api/articles/writearticle', upload.single('image'), validateAuthorization, articleControllers.createArticles);
 app.get('/api/articles/following',validateAuthorization, articleControllers.getArticlesByTopic)
-app.get('/api/articles/:id', articleControllers.getArticleById);
-app.post('/api/articles/writearticle/', validateAuthorization, articleControllers.createArticles);
+app.get('/api/articles/read/:id', articleControllers.getArticleById);
+app.get('/api/articles', articleControllers.getArticles);
 
 
 

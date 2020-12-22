@@ -15,7 +15,7 @@ function Header() {
                 <Link to="/">Home</Link>
             </div>
             <div>
-                <Account />                
+               <Account />             
             </div>
 
 
