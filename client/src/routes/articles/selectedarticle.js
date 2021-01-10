@@ -10,9 +10,7 @@ function SelectedArticle({ className }) {
     if (!articles) return 'Loading...'
     return (
         <div className="article">
-
             <div className={'read-article ' + className}>
-                Estas en el artículo: {id}
                 {articles.map(article =>
                     <div
                         key={article}
@@ -26,13 +24,11 @@ function SelectedArticle({ className }) {
                                     className='article-header-image'
                                     style={{ backgroundImage: 'url(' + article.image + ')' }}
                                 >
-                                    {article.image}
                                 </div>
                                 <div
-                                    className='user-image'
+                                    className='article-user-image'
                                     style={{ backgroundImage: 'url(' + article.userimage + ')' }}
                                 >
-                                    {article.userimage}
                                 </div>
                             </header>
                             <div >

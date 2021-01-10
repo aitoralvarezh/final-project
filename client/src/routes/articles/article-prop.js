@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-function NewArticleProp({ article, className }) {
+function ArticleProp({ article, className }) {
     return (
         <div>
             <Link
@@ -12,7 +12,6 @@ function NewArticleProp({ article, className }) {
                         className="article-img"
                         style={{ backgroundImage: 'url(' + article.image + ')' }}
                     >
-                        {article.image}
                     </div>
                     <div className="article-title">
                         {article.title}
@@ -24,4 +23,4 @@ function NewArticleProp({ article, className }) {
     )
 }
 
-export default NewArticleProp;
+export default ArticleProp;

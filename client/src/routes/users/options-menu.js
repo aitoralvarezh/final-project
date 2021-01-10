@@ -4,6 +4,7 @@ import Selector from './user-menu/option-selector';
 import './options.css'
 import Topics from '../topics/topics';
 import ReadArticle from '../articles/readarticle';
+import MyArticles from './user-menu/articles-admin';
 
 
 function Options() {
@@ -23,7 +24,7 @@ function Options() {
                     <Topics />
                 }
                 {tab === 'articles' &&
-                    <ReadArticle />
+                    <MyArticles />
                 }
             </div>
         </div>

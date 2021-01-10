@@ -1,12 +1,14 @@
+import { useUser } from '../usercontext';
 import ReadArticle from '../routes/articles/readarticle';
 import LastArticles from '../routes/articles/lastarticle';
+import NewArticle from '../routes/articles/createbutton';
 import Banner from './banner'
-import { useUser } from '../usercontext';
 import './main.css'
 
 
 import { Route } from 'react-router-dom';
 import SelectedArticle from '../routes/articles/selectedarticle'
+import CreateArticles from '../routes/articles/createarticle';
 
 function MainPage({ articles }) {
     const me = useUser();
@@ -31,6 +33,7 @@ function MainPage({ articles }) {
             <div className="main-page">
                 <div className="new-articles">
                     <ReadArticle />
+                    <NewArticle />
                 </div>
             </div>
         </div>

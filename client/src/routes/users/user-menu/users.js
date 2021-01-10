@@ -11,14 +11,13 @@ function EditProfile() {
 
     const [name, setName] = useState(me.name || '')
     const [description, setDescription] = useState(me.description || '')
-    const [preview, setPreview] = useState();
+    const [preview, setPreview] = useState(me.image);
 
     const handleSubmit = async e => {
         e.preventDefault();
         const image = e.target.image.files[0];
 
         const data = await userData(token, image, name, description);
-        console.log('Moreprofileshit: ', data);
         if (data) {
             return setMe({ token, user: data })
         }
@@ -32,19 +31,16 @@ function EditProfile() {
         reader.readAsDataURL(e.target.files[0])
     }
 
-    console.log('editprofile: ', me);
-
     const style = preview && { backgroundImage: 'url(' + preview + ')' }
-
 
     return (
         <div>
             <form className="profile-form" onSubmit={handleSubmit}>
                 <div
-                    
                     className="avatar showAvatar"
                     onClick={handleClick}
                     style={style}
+                    value={preview}
                 >
                 </div>
                 <input
@@ -54,10 +50,8 @@ function EditProfile() {
                     accept="image/*"
                     ref={theInput}
                     onChange={handlePick}
-
                 />
                 <div className="data-input">
-
                     <label >
                         <div className="name">Nombre</div>
                         <input

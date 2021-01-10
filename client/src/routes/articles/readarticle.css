@@ -33,18 +33,44 @@ a {
 }
 
 .banner-article {
-    border:none;
-    
+    border:none;    
 }
+
 .banner-article .article-title{
     color:whitesmoke;    
 }
+
+.read-article {
+    margin-top: 40px;
+    margin-left: 50px;
+}
+
 .article-header-image {
     background-size: contain;
+    background-repeat: no-repeat;
     width: 600px;
     height: 200px;
 }
-.user-image{
+.article-user-image{
     background-size: contain;
+    background-repeat: no-repeat;
     width: 100px;  
+    height: 100px;
+}
+
+
+.new-article-button {
+    position:fixed;
+    height:55px;
+    width: 55px;
+    left: 95%;
+    bottom:5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 50px;
+    background-color: #0086b3;
+    color: whitesmoke;
+    font-weight: bold;    
 }

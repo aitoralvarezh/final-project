@@ -29,9 +29,12 @@ function Account() {
                 }
             </Link>
             <Link
-            className="log-in-out"
-            to="/"
-             onClick={() => setMe()}>Logout</Link>
+                className="log-in-out"
+                to="/"
+                onClick={() => setMe()}
+            >
+                Desconectar
+            </Link>
         </div>
     )
 }

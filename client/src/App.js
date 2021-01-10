@@ -8,7 +8,6 @@ import MainPage from './welcome/landing';
 import Login from './routes/users/register-login/login';
 import Register from './routes/users/register-login/register';
 import Options from './routes/users/options-menu';
-import Presentation from './welcome/presentation'
 
 //ARTICLES
 import SelectedArticle from './routes/articles/selectedarticle'
@@ -18,6 +17,7 @@ import ReadArticle from './routes/articles/readarticle';
 import Topics from './routes/topics/topics'
 import LastArticles from './routes/articles/lastarticle';
 import CreateArticles from './routes/articles/createarticle';
+import TopicArticle from './routes/articles/article-topic';
 
 
 function App() {
@@ -33,6 +33,9 @@ function App() {
         <Route path="/articles/read/:id" >
           <SelectedArticle className={'amen'}/>
         </Route>
+        <Route path="/topics/read/:id" >
+          <TopicArticle/>
+        </Route>
         <Route path="/users/me">
           <Options />
         </Route>
@@ -44,6 +47,9 @@ function App() {
         </Route>
         <Route path="/articles">
           <ReadArticle />
+        </Route>
+        <Route path="/topics/:id">
+          <TopicArticle  />
         </Route>
         <Route path="/topics">
           <Topics />

@@ -1,22 +1,11 @@
 .display {
-    border-top-right-radius: 90px;
-    border-top-left-radius: 90px;
-    border-bottom-right-radius: 90px;
-    border-bottom-left-radius: 90px;
-    
-    position: absolute;
-    top: 30vh;
-    right: 80vh;
-    background-color: #fff;
     display: flex;  
     flex-direction: column;
-    border: 2px solid lightgray;
 }
 
 .login form{
     display: flex;
     flex-direction: column;
-    padding: 80px;
 }
 
 .acordeon a  {

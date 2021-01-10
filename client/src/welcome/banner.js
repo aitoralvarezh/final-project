@@ -12,6 +12,9 @@ function Banner({ children }) {
         return (
             <div className="banner">
                 <div>
+                   hello 
+                </div>
+                <div>
                     <Register />
                     <Account />
                 </div>
@@ -20,7 +23,7 @@ function Banner({ children }) {
     }
 
     return (
-        <div className="banner banner-articles">
+        <div className="banner">
             <LastArticles />
         </div>
     )

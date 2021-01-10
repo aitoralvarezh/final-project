@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useArticles } from '../../api';
 import { useUser } from '../../usercontext';
 import Carousel from '../../welcome/Carousel';
-import NewArticleProp from './last-article-prop';
+import ArticleProp from './article-prop';
 
 function LastArticles() {
     const lastArticles = useArticles(/* me ? 10 : 0 */);
@@ -14,7 +14,7 @@ function LastArticles() {
         return (
             <div>
                 {lastArticles.map(article =>
-                    <NewArticleProp article={article} />
+                    <ArticleProp article={article} />
                 )}
             </div>
         )
@@ -24,7 +24,7 @@ function LastArticles() {
         <div>
             <Carousel>
                 {lastArticles.map(article =>
-                    <NewArticleProp article={article} className={'banner-article'}/>
+                    <ArticleProp article={article} className={'banner-article'}/>
                 )}
             </Carousel>
         </div>

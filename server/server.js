@@ -13,8 +13,6 @@ const app = express();
 const upload = multer();
 
 app.use('/static', express.static('uploads'))
-
-
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -46,10 +44,16 @@ app.put('/api/topics/:id', validateAuthorization, topicsControllers.editTopics);
 
 // ---Artículos.
 
+app.get('/api/topics/:id', articleControllers.readArticlesByTopic)
 app.post('/api/articles/writearticle', upload.single('image'), validateAuthorization, articleControllers.createArticles);
 app.get('/api/articles/following',validateAuthorization, articleControllers.getArticlesByTopic)
 app.get('/api/articles/read/:id', articleControllers.getArticleById);
+app.get('/api/articles/myarticles', validateAuthorization, articleControllers.getArticlesByUser)
 app.get('/api/articles', articleControllers.getArticles);
+app.put('/api/myarticles/edit/:id', upload.single('image'), validateAuthorization, articleControllers.editArticles);
+app.delete('/api/articles/detelearticle', validateAuthorization, articleControllers.deleteArticle)
+
+
 
 
 

@@ -208,15 +208,15 @@ async function selectTopics(req, res) {
     try {
         const { id } = req.auth;
         const { topicId } = req.body;
-        
+
         const [insertUserFavs] = await database.pool.query(`INSERT INTO users_and_topics (user_id, topic_id) VALUES (?, ?)`, [id, topicId]);
-        
-        
-        const selectQuery= await database.pool.query('SELECT * from users_and_topics WHERE user_id = ?', id)
-        
+
+
+        const selectQuery = await database.pool.query('SELECT * from users_and_topics WHERE user_id = ?', id)
+
 
         res.send(selectQuery[0]);
-        
+
     } catch (err) {
         res.status(500);
         res.send({ error: err.message });

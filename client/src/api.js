@@ -8,14 +8,19 @@ export const useArticles = (limit) => useFetch('http://localhost:3000/api/articl
 
 export const useSelectedArticle = (id) => useFetch('http://localhost:3000/api/articles/read/' + id);
 
+export const useMyArticles = () => useFetch('http://localhost:3000/api/articles/myarticles');
+
+export const useTopicArticles = (id) => useFetch('http://localhost:3000/api/topics/' + id);
+
+
 export const createArticles = async (token,topicId, image, title, content, visible) => {
 
     const fd = new FormData()
-    fd.append('topic_id', topicId)
-    fd.append('title', title)
-    fd.append('content', content)
-    fd.append('visible', visible)
-    fd.append('image', image)
+    fd.append('topicId', topicId);
+    fd.append('title', title);
+    fd.append('content', content);
+    fd.append('visible', visible);
+    fd.append('image', image);
 
     const ret = await fetch('http://localhost:3000/api/articles/writearticle', {
         method: 'POST',
@@ -57,6 +62,16 @@ export const login = async (username, password, mail) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
+    })
+    const data = await ret.json();
+    return data;
+}
+
+export const deleteArticle = async (id) => {
+    const ret = await fetch('http://localhost:3000/api/articles/detelearticle', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
     })
     const data = await ret.json();
     return data;

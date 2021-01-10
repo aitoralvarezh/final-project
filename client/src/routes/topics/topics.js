@@ -11,9 +11,8 @@ function Topics() {
             {topics.map(topic =>
                 <Link
                     key={topic}
-                    to={`/topics/${topic.name}`}
+                    to={`/topics/read/${topic.id}`}
                 >
-                    
                     <div className="topic">
                         {topic.name}
                     </div>
