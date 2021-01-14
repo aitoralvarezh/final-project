@@ -1,15 +1,20 @@
 import { useMyArticles, deleteArticle } from "../../../api";
 import { Link } from 'react-router-dom'
-import { useState } from "react";
+import { useUser } from "../../../usercontext";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import Acordeon from "../register-login/login-button";
+
 
 
 function MyArticles() {
-    const [erase, setErase] = useState();
 
     const articles = useMyArticles();
+    const me = useUser();
 
-    const handleClick = e => {
-        e.preventDefault();
+    const submit = async (id) => {
+
+        await deleteArticle(me.token, id)
+        window.location.reload()
     }
 
     if (!articles) return 'Loading...'
@@ -17,7 +22,7 @@ function MyArticles() {
     return (
         <div className={'read-article '}>
             {articles.map(article =>
-                <div>
+                <div className='article-menu'>
                     <Link
                         key={article}
                         to={`/articles/read/${article.id}`}
@@ -33,11 +38,24 @@ function MyArticles() {
                             </div>
                         </div>
                     </Link>
-                    <button
-                        onClick={handleClick}
-                    >
-                        delete
-                    </button>
+                    <div className='action-buttons'>
+                        <Acordeon>
+                            <div className="dialog">
+                                <h1>¿Quieres eliminar el artículo?</h1>
+                                <div className="confirmation">
+                                    <div className="confirm-button" onClick={() => submit(article.id)}>
+                                        Borrar
+                                    </div>
+                                    <div className="confirm-button" >
+                                        Cancelar
+                                     </div>
+                                </div>
+                            </div>
+                        </Acordeon>
+                        <button>
+                            {article.visible}
+                        </button>
+                    </div>
                 </div>
 
             )}

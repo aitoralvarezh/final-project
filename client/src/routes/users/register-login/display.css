@@ -3,11 +3,18 @@
     flex-direction: column;
 }
 
-.login form{
+.login-register form{
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    color: black;
+    padding: 10px;
+    font-weight: bold;
+    background-color: yellow;
+    
 }
 
-.acordeon a  {
-    color: black
+.log-reg-button {
+    margin:10px
 }
+

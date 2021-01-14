@@ -5,11 +5,6 @@ import NewArticle from '../routes/articles/createbutton';
 import Banner from './banner'
 import './main.css'
 
-
-import { Route } from 'react-router-dom';
-import SelectedArticle from '../routes/articles/selectedarticle'
-import CreateArticles from '../routes/articles/createarticle';
-
 function MainPage({ articles }) {
     const me = useUser();
     if (!me) {
@@ -19,10 +14,9 @@ function MainPage({ articles }) {
                 <Banner />
                 <LastArticles />
             </div>
-
         )
     }
-
+    
     return (
         <div>
             <div >

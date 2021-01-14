@@ -9,8 +9,6 @@ function home(req, res) {
     res.send('This is the file upload backend demo! Use your frontend to access it.')
 }
 
-
-
 // 1. Ver los usuarios registrados
 
 async function getUsers(req, res) {
@@ -65,7 +63,9 @@ async function createUser(req, res) {
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, createId);
 
-        res.header({ Authorization: 'Bearer ' + token }).send({ token });
+        /*         res.header({ Authorization: 'Bearer ' + token }).send({ token });
+         */
+        const tokenPayload = { id: user.id, role: user.role };
 
         const token = jwt.sign(
             tokenPayload,
@@ -134,7 +134,6 @@ async function editProfile(req, res) {
 
     try {
         const { id } = req.auth;
-        console.log('el id de usuario es:', id);
         const { name, description } = req.body;
 
         const schema = joi.object({
@@ -173,7 +172,7 @@ async function editProfile(req, res) {
 
 }
 
-
+// 5. Cambiar contraseña----------------------------------------------------------------------------------------------|
 async function changePassword(req, res) {
 
     try {
@@ -203,14 +202,13 @@ async function changePassword(req, res) {
 
 }
 
-// 5. Selectión de temas por usuario-----------------------------------------------------------------------------------|
+// 6. Selectión de temas por usuario-----------------------------------------------------------------------------------|
 async function selectTopics(req, res) {
     try {
         const { id } = req.auth;
         const { topicId } = req.body;
 
         const [insertUserFavs] = await database.pool.query(`INSERT INTO users_and_topics (user_id, topic_id) VALUES (?, ?)`, [id, topicId]);
-
 
         const selectQuery = await database.pool.query('SELECT * from users_and_topics WHERE user_id = ?', id)
 
@@ -222,8 +220,7 @@ async function selectTopics(req, res) {
         res.send({ error: err.message });
     }
 }
-// ?. Eliminar a un usuario.
-
+// 7. Eliminar a un usuario.----------------------------------------------------------------------------------------------|
 async function deleteProfile(req, res) {
     try {
         const { id } = req.auth;

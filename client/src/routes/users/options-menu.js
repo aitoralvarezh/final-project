@@ -2,13 +2,12 @@ import { useState } from 'react';
 import EditProfile from "./user-menu/users";
 import Selector from './user-menu/option-selector';
 import './options.css'
-import Topics from '../topics/topics';
-import ReadArticle from '../articles/readarticle';
 import MyArticles from './user-menu/articles-admin';
+import FollowTopics from './user-menu/topic-menu';
 
 
 function Options() {
-    const [tab, setTab] = useState('profile')
+    const [tab, setTab] = useState('articles')
 
     return (
 
@@ -21,7 +20,7 @@ function Options() {
                     <EditProfile />
                 }
                 {tab === 'topics' &&
-                    <Topics />
+                    <FollowTopics />
                 }
                 {tab === 'articles' &&
                     <MyArticles />

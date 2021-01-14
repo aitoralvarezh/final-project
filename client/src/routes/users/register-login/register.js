@@ -21,28 +21,29 @@ function Register() {
     }
 
     return (
-        <div className="login register">
+        <div className="login-register">
             <form onSubmit={handleSubmit}>
                 <label>
-                    Nombre de usuario
+                    <div className="name">Nombre de usuario</div>
                     <input value={username} onChange={e => setusername(e.target.value)} />
                 </label>
                 <label>
-                    Dirección de Email
+                    <div className="name">Dirección de Email</div>
                     <input value={mail} onChange={e => setEmail(e.target.value)} />
                 </label>
                 <label>
-                    Contraseña
-                    <input 
-                    type="password"
-                    value={password} onChange={e => setPassword(e.target.value)} />
+                <div className="name">Contraseña</div>
+
+                    <input
+                        type="password"
+                        value={password} onChange={e => setPassword(e.target.value)} />
                 </label>
                 {isError &&
                     <div className="error">
                         Error de login
                 </div>
                 }
-                <button>Registro</button>
+                <button className="log-reg-button">Registro</button>
             </form>
         </div>
     )

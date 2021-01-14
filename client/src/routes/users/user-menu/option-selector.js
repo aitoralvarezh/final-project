@@ -1,5 +1,4 @@
 
-
 function Selector({tab, setTab}) {
     const tabs = ['profile', 'topics', 'articles']
     return (
@@ -14,6 +13,7 @@ function Selector({tab, setTab}) {
         </div>
     )
 }
+
 
 export default Selector;
 

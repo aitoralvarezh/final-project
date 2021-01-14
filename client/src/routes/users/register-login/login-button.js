@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './display.css'
 
 function Acordeon({children}) {
     const [show, setShow] = useState(false)
     return (
-        <div className="acordeon log-in-out">
+        <div className="acordeon">
             <Link onClick={() => setShow(!show)}>
-                {show ? 'X' : 'Login'}
+                {show ? 'X' : 'Borrar'}
             </Link>
 
             {show &&
-                <div className="display">
+                <div className="display-box">
                     {children}
                 </div>
             }

@@ -1,6 +1,6 @@
 import './header.css'
 import { Link } from 'react-router-dom'
-import { useSetUser, useUser } from './usercontext';
+import { useUser } from './usercontext';
 import Account from './routes/users/register-login/login-menu';
 
 function Header() {

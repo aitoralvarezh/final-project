@@ -178,8 +178,7 @@ async function readArticlesByTopic(req, res) {
 
 async function editArticles(req, res) {
     try {
-        const { id } = req.auth;
-        const { articleId } = req.params
+        const { id } = req.params;
 
         let { title, content, visible } = req.body;
 
@@ -196,7 +195,7 @@ async function editArticles(req, res) {
         let imageName;
 
         if (req.file) {
-            imageName = 'article-image-' + articleId;
+            imageName = 'article-image-' + id;
             await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
             imageName = ('http://localhost:3000/static/' + imageName);
         }
@@ -204,14 +203,14 @@ async function editArticles(req, res) {
         if (imageName) {
 
             await database.pool.query('UPDATE articles SET title = ?, image = ?, content = ?, visible = ? WHERE id = ?',
-                [title, imageName, content, visible, articleId]);
+                [title, imageName, content, visible, id]);
 
         } else {
             await database.pool.query('UPDATE articles SET title = ?, content = ?, visible = ? WHERE id = ?',
-                [title, content, visible, articleId]);
+                [title, content, visible, id]);
         }
         
-        const selectQuery = await database.pool.query('SELECT * FROM articles  WHERE id = ?', articleId);
+        const selectQuery = await database.pool.query('SELECT * FROM articles  WHERE id = ?', id);
 
         res.status(201);
         res.send(selectQuery[0]);

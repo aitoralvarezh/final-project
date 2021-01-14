@@ -7,7 +7,16 @@ function ReadArticle({ article, className }) {
 
     const articles = useSelectedTopicArticles();
 
-    if (!articles) return 'Loading...'
+    if (!articles) return 'Loading...' /* (
+        <div>
+            <h3>¿aun no has seguido un tema?</h3>
+            <Link
+            to="/users/me"
+            >
+                Completa tu perfil
+            </Link>
+        </div>
+    ) */
 
     return (
         <div className={'read-article ' + className}>

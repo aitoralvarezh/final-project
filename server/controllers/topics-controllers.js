@@ -6,8 +6,7 @@ const jwt = require('jsonwebtoken');
 
 
 
-// 1. Crear nuevo tema.
-
+// 1. Crear nuevo tema.----------------------------------------------------------------------------------------------|
 async function addTopic(req, res) {
     try {
         const { id } = req.auth;
@@ -46,11 +45,7 @@ async function addTopic(req, res) {
 
 }
 
-
-
-
 // 2. Get topics -----------------------------------------------------------------------------------------------------------------|
-
 async function getTopics(req, res) {
     try {
         const [topics] = await database.pool.query('SELECT * FROM topics');
@@ -63,7 +58,6 @@ async function getTopics(req, res) {
 }
 
 // 3. Editar topics----------------------------------------------------------------------------------------------------------------|
-
 async function editTopics(req, res) {
     try {
         const { id } = req.params;
@@ -90,7 +84,6 @@ async function editTopics(req, res) {
         res.send({ error: error.message });
     }
 }
-
 
 module.exports = {
     addTopic,

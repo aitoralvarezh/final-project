@@ -70,3 +70,51 @@ label input {
     transition: ease-in-out 0.2s;
 }
 
+.article-menu {
+    display: flex;
+    align-items: center
+
+}
+
+.article-menu a {
+    flex-grow: 1;
+}
+
+.action-buttons {
+    align-items: center;
+    padding: 20px;
+}
+
+.dialog {
+/*     position: relative;
+ */    background-color: #0086b3;
+    padding: 20px;
+    left: 50%;
+    color: whitesmoke;
+}
+
+.dialog .confirmation {
+    display: flex;
+    justify-content: space-around ;
+    color: black;
+}
+
+.confirmation .confirm-button {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+    font-weight: bold;
+    padding: 5px;
+    background-color: yellow;
+
+}
+
+
+.buenas {
+    background-color: green;
+    display: absolute;
+    width: 300px;
+    height: 300px;
+}
+

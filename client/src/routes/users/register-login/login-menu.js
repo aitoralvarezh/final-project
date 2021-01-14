@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSetUser, useUser } from '../../../usercontext'
 import Login from './login'
-import Acordeon from './login-button';
 
 function Account() {
     const setMe = useSetUser();
@@ -11,9 +10,7 @@ function Account() {
     if (!me) {
         return (
             <div>
-                <Acordeon>
-                    <Login />
-                </Acordeon>
+                <Login />
             </div>
         )
     }

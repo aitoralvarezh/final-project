@@ -1,13 +1,12 @@
 import { useState, useRef } from 'react';
-import { useUser, useSetUser } from '../../usercontext';
+import { useUser } from '../../usercontext';
 import { createArticles, useTopics } from '../../api'
 import { useHistory } from 'react-router-dom';
 
 function CreateArticles() {
     const history = useHistory();
 
-    const { user: me, token } = useUser()
-    const setMe = useSetUser()
+    const { user: token } = useUser()
     const theInput = useRef();
     const topics = useTopics()
 
@@ -15,7 +14,7 @@ function CreateArticles() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [topicId, setTopicId] = useState('');
-    const [visible, setVisible] = useState('1');
+    const [visible, setVisible] = useState('');
 
 
     const handleSubmit = async e => {

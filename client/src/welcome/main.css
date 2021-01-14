@@ -7,7 +7,7 @@
 .carousel {
     display: flex;
     align-items: center;
-    justify-content: space-around;    
+    justify-content: space-between;    
 }
 
 .slides {
@@ -16,11 +16,13 @@
 
 
 .arrows {
+    visibility: hidden;
     color:whitesmoke;
     font-weight: thin;
     font-size: 40px;
     cursor: pointer;
-    margin: 0 30px;    
+    margin: 0 30px;  
+    flex-grow: 0;  
 }
 
 .arrows:hover {

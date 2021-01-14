@@ -13,7 +13,7 @@ export const useMyArticles = () => useFetch('http://localhost:3000/api/articles/
 export const useTopicArticles = (id) => useFetch('http://localhost:3000/api/topics/' + id);
 
 
-export const createArticles = async (token,topicId, image, title, content, visible) => {
+export const createArticles = async (token, topicId, image, title, content, visible) => {
 
     const fd = new FormData()
     fd.append('topicId', topicId);
@@ -47,6 +47,20 @@ export const userData = async (token, image, name, description) => {
     return data;
 }
 
+export const userTopics = async (token, topicId) => {
+
+    const fd = new FormData()
+    fd.append('topic_id', topicId)
+
+    const ret = await fetch('http://localhost:3000/api/users/topics', {
+        method: 'POST',
+        headers: { 'Authorization': 'Bearer ' + token },
+        body: fd
+    })
+    const data = await ret.json();
+    return data;
+}
+
 export const register = async (username, password, mail) => {
     const ret = await fetch('http://localhost:3000/api/register', {
         method: 'POST',
@@ -67,10 +81,13 @@ export const login = async (username, password, mail) => {
     return data;
 }
 
-export const deleteArticle = async (id) => {
-    const ret = await fetch('http://localhost:3000/api/articles/detelearticle', {
+export const deleteArticle = async (token, id) => {
+    const ret = await fetch('http://localhost:3000/api/articles/detelearticle/' + id, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Authorization': 'Bearer ' + token,
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify({ id })
     })
     const data = await ret.json();

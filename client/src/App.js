@@ -15,9 +15,10 @@ import ReadArticle from './routes/articles/readarticle';
 
 //TOPICS
 import Topics from './routes/topics/topics'
-import LastArticles from './routes/articles/lastarticle';
 import CreateArticles from './routes/articles/createarticle';
 import TopicArticle from './routes/articles/article-topic';
+import ConfirmBox from './routes/users/user-menu/TESTS';
+
 
 
 function App() {
@@ -25,7 +26,7 @@ function App() {
     <div className="App">
 
       <Header />
-
+      <ConfirmBox/>
       <Switch>
         <Route path="/articles/write" >
           <CreateArticles />

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useArticles } from '../../api';
 import { useUser } from '../../usercontext';
 import Carousel from '../../welcome/Carousel';

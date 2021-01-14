@@ -51,7 +51,7 @@ app.get('/api/articles/read/:id', articleControllers.getArticleById);
 app.get('/api/articles/myarticles', validateAuthorization, articleControllers.getArticlesByUser)
 app.get('/api/articles', articleControllers.getArticles);
 app.put('/api/myarticles/edit/:id', upload.single('image'), validateAuthorization, articleControllers.editArticles);
-app.delete('/api/articles/detelearticle', validateAuthorization, articleControllers.deleteArticle)
+app.delete('/api/articles/detelearticle/:id', validateAuthorization, articleControllers.deleteArticle)
 
 
 

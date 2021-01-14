@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { useSetUser, useUser } from '../../../usercontext';
+import { useSetUser } from '../../../usercontext';
 import { login } from '../../../api'
 import './display.css'
 
 function Login() {
-    const me = useUser()
     const setMe = useSetUser();
-    const [username, setusername] = useState();
+    const [username, setUsername] = useState();
     const [mail, setEmail] = useState();
     const [password, setPassword] = useState();
     const [isError, setError] = useState();
@@ -27,7 +26,7 @@ function Login() {
     }
   
     return (
-        <div className="login">
+        <div className="login-register">
             <form onSubmit={handleSubmit}>
                 <label>
                     <div className="name">Nombre de usuario</div>
@@ -35,7 +34,7 @@ function Login() {
                         autoFocus
                         placeholder="Usuario..."
                         value={username}
-                        onChange={e => setusername(e.target.value)}
+                        onChange={e => setUsername(e.target.value)}
                     />
                 </label>
                 <label>
@@ -52,7 +51,7 @@ function Login() {
                         Error de login
                 </div>
                 }
-                <button className="log-in-out">Inicia sesión</button>
+                <button className="log-reg-button">Inicia sesión</button>
             </form>
         </div>
     )
