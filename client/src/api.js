@@ -10,22 +10,26 @@ export const useSelectedArticle = (id) => useFetch('http://localhost:3000/api/ar
 
 export const useMyArticles = () => useFetch('http://localhost:3000/api/articles/myarticles');
 
+
 export const useTopicArticles = (id) => useFetch('http://localhost:3000/api/topics/' + id);
 
+export const register = async (username, password, mail) => {
 
-export const createArticles = async (token, topicId, image, title, content, visible) => {
-
-    const fd = new FormData()
-    fd.append('topicId', topicId);
-    fd.append('title', title);
-    fd.append('content', content);
-    fd.append('visible', visible);
-    fd.append('image', image);
-
-    const ret = await fetch('http://localhost:3000/api/articles/writearticle', {
+    const ret = await fetch('http://localhost:3000/api/register', {
         method: 'POST',
-        headers: { 'Authorization': 'Bearer ' + token },
-        body: fd
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password, mail })
+    })
+    const data = await ret.json();
+    return data;
+}
+
+export const login = async (username, password, mail) => {
+
+    const ret = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
     })
     const data = await ret.json();
     return data;
@@ -47,12 +51,16 @@ export const userData = async (token, image, name, description) => {
     return data;
 }
 
-export const userTopics = async (token, topicId) => {
+export const createArticles = async (token, topicId, image, title, content, visible) => {
 
     const fd = new FormData()
-    fd.append('topic_id', topicId)
+    fd.append('topicId', topicId);
+    fd.append('title', title);
+    fd.append('content', content);
+    fd.append('visible', visible);
+    fd.append('image', image);
 
-    const ret = await fetch('http://localhost:3000/api/users/topics', {
+    const ret = await fetch('http://localhost:3000/api/articles/writearticle', {
         method: 'POST',
         headers: { 'Authorization': 'Bearer ' + token },
         body: fd
@@ -61,21 +69,30 @@ export const userTopics = async (token, topicId) => {
     return data;
 }
 
-export const register = async (username, password, mail) => {
-    const ret = await fetch('http://localhost:3000/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password, mail })
+export const userTopics = async (token, topicId, follow) => {
+
+    const ret = await fetch('http://localhost:3000/api/users/topics', {
+        method: follow ? 'PUT' : 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+
+        body: JSON.stringify({ topicId })
     })
     const data = await ret.json();
     return data;
 }
 
-export const login = async (username, password, mail) => {
-    const ret = await fetch('http://localhost:3000/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+export const articleVisibility = async (token, visible, id) => {
+
+    const ret = await fetch('http://localhost:3000/api/myarticles/status/'+ id, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ visible })
     })
     const data = await ret.json();
     return data;

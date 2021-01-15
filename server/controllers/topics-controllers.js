@@ -48,7 +48,18 @@ async function addTopic(req, res) {
 // 2. Get topics -----------------------------------------------------------------------------------------------------------------|
 async function getTopics(req, res) {
     try {
-        const [topics] = await database.pool.query('SELECT * FROM topics');
+        const id = req.auth && req.auth.id;
+
+        let topics;
+
+        if (id) {
+            [topics] = await database.pool.query(`SELECT t.*,
+            (select count(*) from users_and_topics u where u.topic_id = t.id and u.user_id = ?) as following
+            FROM topics t`, id);
+        } else {
+            [topics] = await database.pool.query('SELECT * FROM topics');
+        }
+
         res.send(topics)
     } catch (error) {
         res.status(500);

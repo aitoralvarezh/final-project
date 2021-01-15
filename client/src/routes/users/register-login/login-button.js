@@ -1,22 +1,30 @@
-import { useState } from 'react';
+import { useState, forwardRef, useImperativeHandle } from 'react';
 import { Link } from 'react-router-dom';
 
-function Acordeon({children}) {
+function Acordeon({ children }, ref) {
     const [show, setShow] = useState(false)
+
+    useImperativeHandle(ref, () => ({
+        close: () => setShow(false)
+        
+    }))
+
     return (
-        <div className="acordeon">
+        <div className="acordeon" >
             <Link onClick={() => setShow(!show)}>
                 {show ? 'X' : 'Borrar'}
             </Link>
 
-            {show &&
+            { show &&
                 <div className="display-box">
                     {children}
                 </div>
             }
-        </div>
+        </div >
 
     )
 }
+
+Acordeon = forwardRef(Acordeon);
 
 export default Acordeon;

@@ -2,11 +2,12 @@ import { useState, useRef } from 'react';
 import { useUser } from '../../usercontext';
 import { createArticles, useTopics } from '../../api'
 import { useHistory } from 'react-router-dom';
+import './readarticle.css'
 
 function CreateArticles() {
     const history = useHistory();
 
-    const { user: token } = useUser()
+    const { token } = useUser()
     const theInput = useRef();
     const topics = useTopics()
 
@@ -24,7 +25,6 @@ function CreateArticles() {
         const data = await createArticles(token, topicId, image, title, content, visible);
 
         history.push('/articles/read/' + data[0].id);
-
 
         if (data) {
             return data
@@ -47,7 +47,7 @@ function CreateArticles() {
         <div>
             <form className="profile-form" onSubmit={handleSubmit}>
                 <div
-                    className="avatar showAvatar"
+                    className="article-create"
                     style={style}
                     onClick={handleClick}
                     value={preview}
@@ -71,34 +71,35 @@ function CreateArticles() {
                             onChange={e => setTitle(e.target.value)}
                         />
                     </label>
-                    <label >
-                        <div className="name">topic</div>
-                        <select
-                            name="topicId"
-                            value={topicId}
-                            onChange={e => setTopicId(e.target.value)}
-                        >
-                            {topics.map(topic =>
-                                <option
-                                    key={topic}
-                                    value={topic.id}
-                                >
-                                    {topic.name}
-                                </option>
-                            )}
-                        </select>
-                    </label>
-                    <label >
-                        <div className="name">visible</div>
-                        <select
-                            name="visible"
-                            value={visible}
-                            onChange={e => setVisible(e.target.value)}>
-                            <option value="1" selected>Público</option>
-                            <option value="0">Privado</option>
+                    <div className="minor-choice-selection">
 
-                        </select>
-                    </label>
+                        <label>
+                            <select
+                                name="topicId"
+                                value={topicId}
+                                onChange={e => setTopicId(e.target.value)}
+                            >
+                                {topics.map(topic =>
+                                    <option
+                                        key={topic}
+                                        value={topic.id}
+                                    >
+                                        {topic.name}
+                                    </option>
+                                )}
+                            </select>
+                        </label>
+                        <label >
+                            <select
+                                name="visible"
+                                value={visible}
+                                onChange={e => setVisible(e.target.value)}>
+                                <option value="1" selected>Público</option>
+                                <option value="0">Privado</option>
+
+                            </select>
+                        </label>
+                    </div>
                     <label>
                         <div className="name">Descripción</div>
                         <textarea

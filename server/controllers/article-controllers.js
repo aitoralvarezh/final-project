@@ -6,10 +6,6 @@ const fs = require('fs').promises;
 const path = require('path')
 
 
-
-
-
-
 // 1. Get articles ------------------------------------------------------------------------------------------------------|
 
 async function getArticles(req, res) {
@@ -98,7 +94,7 @@ async function createArticles(req, res) {
     }
 }
 
-
+// 4. Get article by topic-----------------------------------------------------------------------------------------------------|
 async function getArticlesByTopic(req, res) {
     try {
         //--Devuelve los topics que el usuario sigue
@@ -127,7 +123,7 @@ async function getArticlesByTopic(req, res) {
     }
 }
 
-
+// 5. Get article by user-----------------------------------------------------------------------------------------------------|
 async function getArticlesByUser(req, res) {
     try {
         //--Devuelve los topics que el usuario sigue
@@ -153,11 +149,11 @@ async function getArticlesByUser(req, res) {
         })
     }
 }
+// 6. Read article related to a topic--------------------------------------------------------------------------------------------|
 async function readArticlesByTopic(req, res) {
     try {
         //--Devuelve los articulos con el tema seleccionado
         const { id } = req.params
-
 
         const selectQuery = await database.pool.query(`SELECT * from articles 
             WHERE topic_id = ? AND visible = true
@@ -165,7 +161,6 @@ async function readArticlesByTopic(req, res) {
 
         res.status(201);
         res.send(selectQuery[0]);
-
     } catch (error) {
         console.log(error)
         res.status(500)
@@ -175,7 +170,7 @@ async function readArticlesByTopic(req, res) {
     }
 }
 
-
+// 7. Edit article-----------------------------------------------------------------------------------------------------|
 async function editArticles(req, res) {
     try {
         const { id } = req.params;
@@ -209,7 +204,7 @@ async function editArticles(req, res) {
             await database.pool.query('UPDATE articles SET title = ?, content = ?, visible = ? WHERE id = ?',
                 [title, content, visible, id]);
         }
-        
+
         const selectQuery = await database.pool.query('SELECT * FROM articles  WHERE id = ?', id);
 
         res.status(201);
@@ -220,6 +215,32 @@ async function editArticles(req, res) {
     }
 }
 
+//8. Edit article visibility -----------------------------------------------------------------------------------------------------|
+async function editArticleStatus(req, res) {
+    try {
+        const { id } = req.params;
+
+        let { visible } = req.body;
+
+        visible = (visible === '1')
+
+        const schema = joi.object({
+            visible: joi.boolean()
+        });
+        await schema.validateAsync({ visible });
+        
+        await database.pool.query('UPDATE articles SET visible = ? WHERE id = ?', [visible, id]);
+
+        const selectQuery = await database.pool.query('SELECT * FROM articles  WHERE id = ?', id);
+
+        res.status(201);
+        res.send(selectQuery[0]);
+    } catch (error) {
+        res.status(500);
+        res.send({ error: error.message })
+    }
+}
+// 9. Delete article-----------------------------------------------------------------------------------------------------|
 async function deleteArticle(req, res) {
     try {
         const { id } = req.body;
@@ -242,7 +263,6 @@ module.exports = {
     getArticlesByUser,
     readArticlesByTopic,
     editArticles,
+    editArticleStatus,
     deleteArticle,
-
-
 }

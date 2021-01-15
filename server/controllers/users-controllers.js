@@ -9,8 +9,7 @@ function home(req, res) {
     res.send('This is the file upload backend demo! Use your frontend to access it.')
 }
 
-// 1. Ver los usuarios registrados
-
+// 1. Ver los usuarios registrados-----------------------------------------------------------------------------------------|
 async function getUsers(req, res) {
     try {
         const users = await database.pool.query('SELECT * FROM users')
@@ -21,8 +20,7 @@ async function getUsers(req, res) {
     }
 }
 
-// 2. Registrar un nuevo usuario
-
+// 2. Registrar un nuevo usuario-----------------------------------------------------------------------------------------|
 async function createUser(req, res) {
     try {
 
@@ -63,8 +61,8 @@ async function createUser(req, res) {
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, createId);
 
-        /*         res.header({ Authorization: 'Bearer ' + token }).send({ token });
-         */
+        res.header({ Authorization: 'Bearer ' + token }).send({ token });
+
         const tokenPayload = { id: user.id, role: user.role };
 
         const token = jwt.sign(
@@ -82,7 +80,6 @@ async function createUser(req, res) {
 }
 
 // 3. Login de usuarios-----------------------------------------------------------------------------------------|
-
 async function login(req, res) {
     try {
         const { mail, username, password } = req.body;
@@ -129,7 +126,6 @@ async function login(req, res) {
 }
 
 // 4. Edición de perfil----------------------------------------------------------------------------------------------|
-
 async function editProfile(req, res) {
 
     try {
@@ -202,24 +198,40 @@ async function changePassword(req, res) {
 
 }
 
-// 6. Selectión de temas por usuario-----------------------------------------------------------------------------------|
+
+// 6. Selección de temas por usuario-----------------------------------------------------------------------------------|
 async function selectTopics(req, res) {
     try {
         const { id } = req.auth;
         const { topicId } = req.body;
 
-        const [insertUserFavs] = await database.pool.query(`INSERT INTO users_and_topics (user_id, topic_id) VALUES (?, ?)`, [id, topicId]);
+        await database.pool.query(`INSERT INTO users_and_topics (user_id, topic_id) VALUES (?, ?)`, [id, topicId]);
 
-        const selectQuery = await database.pool.query('SELECT * from users_and_topics WHERE user_id = ?', id)
-
-
-        res.send(selectQuery[0]);
+        res.send({});
 
     } catch (err) {
+        console.log('Error topics: ', err);
         res.status(500);
         res.send({ error: err.message });
     }
 }
+
+async function deleteFollowingTopic(req, res) {
+    try {
+        const { id } = req.auth;
+        const { topicId } = req.body;
+
+        await database.pool.query(`DELETE FROM users_and_topics WHERE topic_id= ? AND user_id = ?`, [topicId, id]);
+
+        res.send({});
+
+    }
+    catch (error) {
+        res.status(500);
+        res.send({ error: error.message })
+    }
+}
+
 // 7. Eliminar a un usuario.----------------------------------------------------------------------------------------------|
 async function deleteProfile(req, res) {
     try {
@@ -256,5 +268,6 @@ module.exports = {
     changePassword,
     deleteProfile,
     selectTopics,
+    deleteFollowingTopic
 
 }

@@ -7,7 +7,8 @@ import FollowTopics from './user-menu/topic-menu';
 
 
 function Options() {
-    const [tab, setTab] = useState('articles')
+    const [tab, setTab] = useState('profile')
+    const [key, setKey] = useState(1);
 
     return (
 
@@ -23,7 +24,9 @@ function Options() {
                     <FollowTopics />
                 }
                 {tab === 'articles' &&
-                    <MyArticles />
+                    <MyArticles 
+                    key={key} 
+                    reload={()=> setKey(key + 1)} />
                 }
             </div>
         </div>

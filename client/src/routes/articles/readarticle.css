@@ -74,3 +74,14 @@ a {
     color: whitesmoke;
     font-weight: bold;    
 }
+
+.article-create {
+    width: 400px;
+    height: 200px;
+    border: black solid 1px;
+}
+
+.minor-choice-selection{
+    display: flex;
+    justify-content: space-around;
+}

@@ -1,6 +1,5 @@
 import './banner.css'
 import Register from '../routes/users/register-login/register'
-import Acordeon from '../routes/users/register-login/login-button'
 import { useUser } from '../usercontext';
 import Account from '../routes/users/register-login/login-menu';
 import LastArticles from '../routes/articles/lastarticle'

@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { usersControllers, articleControllers, topicsControllers, commentsControllers } = require('./controllers');
-const { validateAuthorization } = require('./middlewares');
+const { validateAuthorization, optionalValidation } = require('./middlewares');
 const { HTTP_PORT } = process.env;
 
 // 1. Modulos requeridos.
@@ -26,20 +26,21 @@ app.use(bodyParser.json());
 // ---Usuarios.
 
 app.get('/api/users', usersControllers.getUsers);
-/* app.get('/api/users/:id', usersControllers.getUserById);*/
 app.post('/api/register', usersControllers.createUser);
 app.post('/api/login', usersControllers.login);
 app.put('/api/users/me', upload.single('image'), validateAuthorization, usersControllers.editProfile);
 app.put('/api/users/chanhepassword', validateAuthorization, usersControllers.changePassword)
 app.delete('/api/users/deleteaccount', validateAuthorization, usersControllers.deleteProfile)
-app.post('/api/users/topics', validateAuthorization, usersControllers.selectTopics)
+app.put('/api/users/topics', validateAuthorization, usersControllers.selectTopics)
+app.delete('/api/users/topics', validateAuthorization, usersControllers.deleteFollowingTopic)
+
 
 
 
 // ---Temas.
 
 app.post('/api/topics/', validateAuthorization, topicsControllers.addTopic);
-app.get('/api/topics', topicsControllers.getTopics);
+app.get('/api/topics', optionalValidation, topicsControllers.getTopics);
 app.put('/api/topics/:id', validateAuthorization, topicsControllers.editTopics);
 
 // ---Artículos.
@@ -50,6 +51,7 @@ app.get('/api/articles/following',validateAuthorization, articleControllers.getA
 app.get('/api/articles/read/:id', articleControllers.getArticleById);
 app.get('/api/articles/myarticles', validateAuthorization, articleControllers.getArticlesByUser)
 app.get('/api/articles', articleControllers.getArticles);
+app.put('/api/myarticles/status/:id', validateAuthorization, articleControllers.editArticleStatus);
 app.put('/api/myarticles/edit/:id', upload.single('image'), validateAuthorization, articleControllers.editArticles);
 app.delete('/api/articles/detelearticle/:id', validateAuthorization, articleControllers.deleteArticle)
 

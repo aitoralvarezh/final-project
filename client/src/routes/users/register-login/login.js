@@ -6,13 +6,12 @@ import './display.css'
 function Login() {
     const setMe = useSetUser();
     const [username, setUsername] = useState();
-    const [mail, setEmail] = useState();
     const [password, setPassword] = useState();
     const [isError, setError] = useState();
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const data = await login(username, password, mail);
+        const data = await login(username, password);
         if (data.token) {
             setMe(data)
 
