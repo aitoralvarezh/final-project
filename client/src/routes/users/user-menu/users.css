@@ -118,3 +118,35 @@ label input {
     height: 300px;
 }
 
+.topic-choice-org {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+}
+
+.topic-choice {
+    border : 5px whitesmoke solid;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: #0086b3;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    color: whitesmoke;
+    flex-direction: row;
+    font-size: 30px;
+    cursor: pointer;
+}
+.checked {
+    background-color: yellow;
+    color: black;
+}

@@ -1,6 +1,6 @@
 
 function Selector({tab, setTab}) {
-    const tabs = ['profile', 'topics', 'articles']
+    const tabs = ['Perfil', 'Temas', 'Artículos']
     return (
         <div>
             {tabs.map(t =>

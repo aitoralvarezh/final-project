@@ -1,6 +1,7 @@
 import { useUser } from "../../../usercontext";
 import { userTopics } from "../../../api"
 import { useState } from "react";
+import './users.css'
 
 function TopicProp({ topic }) {
     const { token } = useUser()
@@ -9,14 +10,22 @@ function TopicProp({ topic }) {
 
     const handleChange = async () => {
         setFollow(!follow);
-         await userTopics(token, topic.id, !follow);
+        await userTopics(token, topic.id, !follow);
     }
+    const checkStyle = (follow ? 'checked' : 'unchecked')
 
     return (
         <label
             key={topic}
-        >{topic.name}
+        >
+            <div
+                style={{ backgroundImage: 'url(' + topic.image + ')' }}
+                className={'topic-choice ' + checkStyle}
+            >
+                {topic.name}
+            </div>
             <input
+                className='hide'
                 type="checkbox"
                 name="topicId"
                 checked={follow}

@@ -10,11 +10,19 @@ function TopicArticle({ className }) {
 
     if (!articles) return 'Loading...';
     return (
+        <div>
+            <div>
+                hola
+            </div>
         <div className={'read-article ' + className}>
             {articles.map(article =>
+            <div>
                 <ArticleProp article={article} />
-            )}
+                {}
+</div>
+                )}
         </div>
+                </div>
     )
 }
 

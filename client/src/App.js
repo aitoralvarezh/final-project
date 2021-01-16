@@ -26,7 +26,6 @@ function App() {
     <div className="App">
 
       <Header />
-      <ConfirmBox />
       <Switch>
         <Route path="/articles/write" >
           <CreateArticles />

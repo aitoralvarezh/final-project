@@ -3,6 +3,8 @@ const { database } = require('../structure');
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs').promises;
+const path = require('path')
 
 
 
@@ -10,27 +12,38 @@ const jwt = require('jsonwebtoken');
 async function addTopic(req, res) {
     try {
         const { id } = req.auth;
-        const { name, description, tag, image } = req.body;
+        const { name, description, tag } = req.body;
         const topicSchema = joi.object({
-            name: joi.string().required(),
+            name: joi.string(),
             description: joi.string().max(300),
-            image: joi.string().max(100).required(),
             tag: joi.string().required()
         });
-        await topicSchema.validateAsync({ name, description, tag, image })
-
+        await topicSchema.validateAsync({ name, description, tag })
+        
         const [noRepeat] = await database.pool.query('SELECT * FROM topics WHERE tag = ?', tag)
-
         if (noRepeat.length) {
             const error = new Error('Ya existe un tema asociado a ese tag');
             error.code = 409;
             throw error
         }
-
-        const insertQuery = 'INSERT INTO topics(name, description, tag, image) VALUES (?, ?, ?, ?)';
-        const [rows] = await database.pool.query(insertQuery, [name, description, tag, image]);
+        
+                const insertQuery = 'INSERT INTO topics(name, description, tag) VALUES (?, ?, ?)';
+                const [rows] = await database.pool.query(insertQuery, [name, description, tag]);
 
         const createId = rows.insertId;
+
+        let imageName;
+
+        if (req.file) {
+            imageName = 'topic-image-' + id;
+            await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
+            imageName = ('http://localhost:3000/static/' + imageName);
+        }
+
+        if (imageName) {
+            await database.pool.query('UPDATE topics SET  image = ? WHERE id = ?',
+                [ imageName, createId]);
+        }
 
         const selectQuery = 'SELECT * FROM topics WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, createId)

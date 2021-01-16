@@ -39,7 +39,7 @@ app.delete('/api/users/topics', validateAuthorization, usersControllers.deleteFo
 
 // ---Temas.
 
-app.post('/api/topics/', validateAuthorization, topicsControllers.addTopic);
+app.post('/api/topics', upload.single('image'), validateAuthorization, topicsControllers.addTopic);
 app.get('/api/topics', optionalValidation, topicsControllers.getTopics);
 app.put('/api/topics/:id', validateAuthorization, topicsControllers.editTopics);
 

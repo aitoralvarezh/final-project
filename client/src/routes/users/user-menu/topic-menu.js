@@ -3,12 +3,14 @@ import TopicProp from "./topics-prop";
 
 
 function FollowTopics() {
-    const topics = useTopics();  
+    const topics = useTopics();
 
     if (!topics) return 'Loading...';
 
     return (
-        <div>
+        <div
+            className="topic-choice-org"
+        >
             {topics.map(topic =>
                 <TopicProp topic={topic} />
             )}

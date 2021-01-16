@@ -1,26 +1,25 @@
 .menu {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: space-around;
 }
 
-/* añadir MediaQuery */
-
-.select  div {
+.select div {
     border-top-right-radius: 90px;
     border-top-left-radius: 90px;
     border-bottom-right-radius: 90px;
     border-bottom-left-radius: 90px;
-
     display: flex;
-    width: 100px;
+    align-content: center;
     flex-direction: column;
-    justify-content: space-between;
-    margin: 30px 10px;
-    padding: 10px;
-    align-items:center;
-    font-weight: bold;
-    cursor: pointer;
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 30px;
+}
+
+.selection {
+    flex-grow: 1;
+    justify-content: center;
 }
 
 .normal {
@@ -31,8 +30,4 @@
 
 .active {
     background-color: yellow;
-}
-
-.selection {
-    flex-grow: 1;
 }

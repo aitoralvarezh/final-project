@@ -22,6 +22,10 @@ a {
 }
 
 .article-img {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     width: 400px;
     height: 200px;
     background-color: yellow;
@@ -46,6 +50,7 @@ a {
 }
 
 .article-header-image {
+    
     background-size: contain;
     background-repeat: no-repeat;
     width: 600px;
@@ -84,4 +89,35 @@ a {
 .minor-choice-selection{
     display: flex;
     justify-content: space-around;
+}
+
+.complete-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 100px;
+    align-items: center;
+    
+}
+
+.complete-data div {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #0086b3;
+    padding: 30px;
+}
+
+.complete-data div a {
+    border-top-right-radius: 90px;
+    border-top-left-radius: 90px;
+    border-bottom-right-radius: 90px;
+    border-bottom-left-radius: 90px;
+
+    background-color: yellow;
+    padding: 20px;
 }
