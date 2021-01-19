@@ -19,36 +19,36 @@ async function addTopic(req, res) {
             tag: joi.string().required()
         });
         await topicSchema.validateAsync({ name, description, tag })
-        
+
         const [noRepeat] = await database.pool.query('SELECT * FROM topics WHERE tag = ?', tag)
         if (noRepeat.length) {
             const error = new Error('Ya existe un tema asociado a ese tag');
             error.code = 409;
             throw error
         }
-        
-                const insertQuery = 'INSERT INTO topics(name, description, tag) VALUES (?, ?, ?)';
-                const [rows] = await database.pool.query(insertQuery, [name, description, tag]);
+
+        const insertQuery = 'INSERT INTO topics(name, description, tag) VALUES (?, ?, ?)';
+        const [rows] = await database.pool.query(insertQuery, [name, description, tag]);
 
         const createId = rows.insertId;
 
         let imageName;
 
         if (req.file) {
-            imageName = 'topic-image-' + id;
+            imageName = 'topic-image-' + createId;
             await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
             imageName = ('http://localhost:3000/static/' + imageName);
         }
 
         if (imageName) {
             await database.pool.query('UPDATE topics SET  image = ? WHERE id = ?',
-                [ imageName, createId]);
+                [imageName, createId]);
         }
 
-        const selectQuery = 'SELECT * FROM topics WHERE id = ?';
-        const [selectRows] = await database.pool.query(selectQuery, createId)
+        const selectQuery = await database.pool.query('SELECT * FROM topics WHERE id = ?', [createId]);
+        
 
-        res.send(selectRows[0])
+        res.send(selectQuery[0])
     }
     catch (error) {
         res.status(500);
@@ -85,24 +85,27 @@ async function getTopics(req, res) {
 async function editTopics(req, res) {
     try {
         const { id } = req.params;
-        const { name, description, tag, image } = req.body;
-        const topicSchema = joi.object({
-            name: joi.string().required(),
-            description: joi.string().max(300),
-            image: joi.string().max(100).required(),
-            tag: joi.string().required()
-        });
-        await topicSchema.validateAsync({ name, description, tag, image })
+        const { name, description } = req.body;
 
+        let imageName;
 
-        const updateQuery = ('UPDATE topics SET name = ?, image = ?, description = ?, tag = ? WHERE id = ?');
+        if (req.file) {
+            imageName = 'topic-image-' + id;
+            await fs.writeFile(path.join('uploads', imageName), req.file.buffer)
+            imageName = ('http://localhost:3000/static/' + imageName);
+        }
 
-        await database.pool.query(updateQuery, [name, image, description, tag, id]);
+        if (imageName) {
+            await database.pool.query('UPDATE topics SET  name = ?, description = ?, image = ? WHERE id = ?',
+                [name, description, imageName, id]);
+        } else {
+            await database.pool.query('UPDATE topics SET name = ?, description = ?, WHERE id = ?',
+                [name, description, tag, id]);
+        }
 
-        const selectQuery = 'SELECT * FROM topics WHERE id = ?';
-        const [selectRows] = await database.pool.query(selectQuery, id);
+        const selectQuery = await database.pool.query('SELECT * FROM topics WHERE id = ?', id);
 
-        res.send(selectRows[0]);
+        res.send(selectQuery[0]);
     } catch (error) {
         res.status(500);
         res.send({ error: error.message });

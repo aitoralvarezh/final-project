@@ -6,22 +6,17 @@ function VisibilityButton({ article }) {
     const { token } = useUser();
     const [visible, setvisible] = useState(!!article.visible);
 
-    console.log(visible);
-
     const handleChange = async () => {
-        if (visible) {
-            setvisible(false);
-        }
-        else {
-            setvisible(true)
-        }
-        await articleVisibility(token, visible, article.id);
+        setvisible(!visible)
+        await articleVisibility(token, !visible, article.id);
     }
+    const checkStyle = (visible ? 'public' : 'private')
+
     return (
-        <label
-            key={visible}
-        >{visible}
+        <label>
+            <div className={'visibility-choice ' + checkStyle} />
             <input
+                className="hide"
                 type="checkbox"
                 name="visible"
                 checked={visible}

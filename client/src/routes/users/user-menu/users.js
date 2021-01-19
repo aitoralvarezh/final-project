@@ -11,7 +11,7 @@ function EditProfile() {
 
     const [name, setName] = useState(me.name || '')
     const [description, setDescription] = useState(me.description || '')
-    const [preview, setPreview] = useState(me.image);
+    const [preview, setPreview] = useState(me.image );
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -37,11 +37,11 @@ function EditProfile() {
         <div>
             <form className="profile-form" onSubmit={handleSubmit}>
                 <div
+                    
                     className="avatar showAvatar"
                     onClick={handleClick}
                     style={style}
-                    value={preview}
-                >
+                    value={preview}                >
                 </div>
                 <input
                     className="hide"
@@ -62,7 +62,9 @@ function EditProfile() {
                     </label>
                     <label>
                         <div className="name">Descripción</div>
-                        <input
+                        <textarea
+                        cols="20"
+                        rows="10"
                             name="description"
                             value={description}
                             onChange={e => setDescription(e.target.value)}

@@ -100,16 +100,11 @@ async function getArticlesByTopic(req, res) {
         //--Devuelve los topics que el usuario sigue
         const { id } = req.auth;
 
-        console.log('vista:', req.auth);
-
         const selectQuery = await database.pool.query(`SELECT * from articles 
             WHERE topic_id 
             IN (SELECT topic_id FROM users_and_topics 
             WHERE user_id = ? AND visible = true)
             ORDER BY date DESC`, id);
-
-
-        console.log('>>: ', selectQuery[0]);
 
         res.status(201);
         res.send(selectQuery[0]);
@@ -129,24 +124,16 @@ async function getArticlesByUser(req, res) {
         //--Devuelve los topics que el usuario sigue
         const { id } = req.auth;
 
-        console.log('vista:', req.auth);
-
         const selectQuery = await database.pool.query(`SELECT * from articles 
             WHERE user_id = ?
             ORDER BY date DESC`, id);
-
-
-        console.log('>>: ', selectQuery[0]);
 
         res.status(201);
         res.send(selectQuery[0]);
 
     } catch (error) {
-        console.log(error)
         res.status(500)
-        res.send({
-            error: error.message
-        })
+        res.send({ error: error.message })
     }
 }
 // 6. Read article related to a topic--------------------------------------------------------------------------------------------|
@@ -162,7 +149,6 @@ async function readArticlesByTopic(req, res) {
         res.status(201);
         res.send(selectQuery[0]);
     } catch (error) {
-        console.log(error)
         res.status(500)
         res.send({
             error: error.message
@@ -222,13 +208,13 @@ async function editArticleStatus(req, res) {
 
         let { visible } = req.body;
 
-        visible = (visible === '1')
+        visible = (visible === '1' || visible === true)
 
         const schema = joi.object({
             visible: joi.boolean()
         });
         await schema.validateAsync({ visible });
-        
+
         await database.pool.query('UPDATE articles SET visible = ? WHERE id = ?', [visible, id]);
 
         const selectQuery = await database.pool.query('SELECT * FROM articles  WHERE id = ?', id);

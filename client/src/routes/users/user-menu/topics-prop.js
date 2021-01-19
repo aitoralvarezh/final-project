@@ -22,7 +22,7 @@ function TopicProp({ topic }) {
                 style={{ backgroundImage: 'url(' + topic.image + ')' }}
                 className={'topic-choice ' + checkStyle}
             >
-                {topic.name}
+                <h4>{topic.name}</h4>
             </div>
             <input
                 className='hide'

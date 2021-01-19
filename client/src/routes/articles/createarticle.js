@@ -2,6 +2,8 @@ import { useState, useRef } from 'react';
 import { useUser } from '../../usercontext';
 import { createArticles, useTopics } from '../../api'
 import { useHistory } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import './readarticle.css'
 
 function CreateArticles() {
@@ -15,21 +17,22 @@ function CreateArticles() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [topicId, setTopicId] = useState('');
-    const [visible, setVisible] = useState('');
+    const [visible, setVisible] = useState('1');
 
 
     const handleSubmit = async e => {
         e.preventDefault();
         const image = e.target.image.files[0];
 
-        const data = await createArticles(token, topicId, image, title, content, visible);
 
+        const data = await createArticles(token, topicId, image, title, content, visible);
         history.push('/articles/read/' + data[0].id);
 
         if (data) {
             return data
         }
     }
+
     const handleClick = e => {
         theInput.current.click()
     }
@@ -46,70 +49,76 @@ function CreateArticles() {
     return (
         <div>
             <form className="profile-form" onSubmit={handleSubmit}>
-                <div
-                    className="article-create"
-                    style={style}
-                    onClick={handleClick}
-                    value={preview}
-
-                >
-                </div>
-                <input
-                    className="hide"
-                    name="image"
-                    type='file'
-                    accept="image/*"
-                    ref={theInput}
-                    onChange={handlePick}
-                />
-                <div className="data-input">
-                    <label >
-                        <div className="name">Título</div>
-                        <input
-                            name="title"
-                            value={title}
-                            onChange={e => setTitle(e.target.value)}
-                        />
-                    </label>
-                    <div className="minor-choice-selection">
-
-                        <label>
-                            <select
-                                name="topicId"
-                                value={topicId}
-                                onChange={e => setTopicId(e.target.value)}
+                <div className="create-article-data" >
+                    <div>
+                        <div className=" main-data-input">
+                            <div
+                                className="article-create-img"
+                                style={style}
+                                onClick={handleClick}
+                                value={preview}
                             >
-                                {topics.map(topic =>
-                                    <option
-                                        key={topic}
-                                        value={topic.id}
+                            </div>
+                            <input
+                                className="hide"
+                                name="image"
+                                type='file'
+                                accept="image/*"
+                                ref={theInput}
+                                onChange={handlePick}
+                            />
+                            <div className="minor-choice-selection">
+                                <select
+                                    name="topicId"
+                                    value={topicId}
+                                    required
+                                    onChange={e => setTopicId(e.target.value)}
+                                >
+                                    <option hidden
+                                        value=""
                                     >
-                                        {topic.name}
+                                        selecciona
                                     </option>
-                                )}
-                            </select>
-                        </label>
-                        <label >
-                            <select
-                                name="visible"
-                                value={visible}
-                                onChange={e => setVisible(e.target.value)}>
-                                <option value="1" selected>Público</option>
-                                <option value="0">Privado</option>
+                                    {topics.map(topic =>
 
-                            </select>
-                        </label>
+                                        <option
+                                            key={topic}
+                                            value={topic.id}
+                                        >
+                                            {topic.name}
+                                        </option>
+                                    )}
+                                </select>
+                                <select
+                                    name="visible"
+                                    value={visible}
+                                    onChange={e => setVisible(e.target.value)}>
+                                    <option value="1" selected>Público</option>
+                                    <option value="0">Privado</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="data-input">
+
+                            <label>
+                                <div className="name ">Título</div>
+                                <input
+                                    name="title"
+                                    value={title}
+                                    onChange={e => setTitle(e.target.value)}
+                                />
+                            </label>
+                        </div>
                     </div>
-                    <label>
-                        <div className="name">Descripción</div>
-                        <textarea
+                    <div className="create-article-content">
+                        <ReactQuill
                             name="content"
-                            value={content}
-                            onChange={e => setContent(e.target.value)}
+                            defaultValue={content}
+                            onChange={setContent}
                         />
-                    </label>
+                    </div>
                 </div>
-                <button className="">Guardar</button>
+                <button className="save">Publicar</button>
             </form>
         </div >
     )

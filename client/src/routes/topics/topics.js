@@ -13,12 +13,12 @@ function Topics() {
             {topics.map(topic =>
                 <Link
                     key={topic}
-                    to={`/topics/read/${topic.name}`}
+                    to={`/topics/read/${topic.id}`}
                 >
                     <div
                         style={{ backgroundImage: 'url(' + topic.image + ')' }}
                         className="topic">
-                        {topic.name}
+                        <h3>{topic.name}</h3>
                     </div>
                 </Link>
             )}

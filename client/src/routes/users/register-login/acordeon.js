@@ -12,7 +12,7 @@ function Acordeon({ children }, ref) {
     return (
         <div className="acordeon" >
             <Link onClick={() => setShow(!show)}>
-                {show ? 'X' : 'Borrar'}
+                {show ? '' : 'Borrar'}
             </Link>
 
             { show &&

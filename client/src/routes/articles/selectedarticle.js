@@ -9,36 +9,34 @@ function SelectedArticle({ className }) {
 
     if (!articles) return 'Loading...'
     return (
-        <div className="article">
-            <div className={'read-article ' + className}>
-                {articles.map(article =>
-                    <div
-                        key={article}
-                    >
-                        <div className="la">
-                            <header>
-                                <div className="">
-                                    {article.title}
-                                </div>
-                                <div
-                                    className='article-header-image'
-                                    style={{ backgroundImage: 'url(' + article.image + ')' }}
-                                >
-                                </div>
-                                <div
-                                    className='article-user-image'
-                                    style={{ backgroundImage: 'url(' + article.userimage + ')' }}
-                                >
-                                </div>
-                            </header>
-                            <div >
-                                {article.content}
+        <div className={'selected-article ' + className}>
+            {articles.map(article =>
+                <div
+                    key={article}
+                >
+                    <header className='article-data'>
+                        <h1 className="title">
+                            {article.title}
+                        </h1>
+                        <div className='article-user-data'>
+                            <div
+                                className='article-user-image'
+                                style={{ backgroundImage: 'url(' + article.userimage + ')' }}
+                            >
                             </div>
+                            <div>{article.name}</div>
                         </div>
-                    </div>
-
-                )}
-            </div>
+                        <div
+                            className='article-header-image'
+                            style={{ backgroundImage: 'url(' + article.image + ')' }}
+                        >
+                        </div>
+                    </header>
+                    <div className='article-content'
+                        dangerouslySetInnerHTML={{ __html: article.content }}
+                    />
+                </div>
+            )}
         </div>
     )
 }

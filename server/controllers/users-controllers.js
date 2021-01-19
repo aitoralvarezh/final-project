@@ -61,7 +61,9 @@ async function createUser(req, res) {
         const selectQuery = 'SELECT * FROM users WHERE id = ?';
         const [selectRows] = await database.pool.query(selectQuery, createId);
 
-        res.header({ Authorization: 'Bearer ' + token }).send({ token });
+
+        //res.send(selectRows[0])
+        const user = selectRows[0]
 
         const tokenPayload = { id: user.id, role: user.role };
 
@@ -70,7 +72,9 @@ async function createUser(req, res) {
             process.env.JWT_SECRET,
             { expiresIn: '30d' },
         );
-        res.header({ Authorization: 'Bearer ' + token }).send({ token }, ...selectRows[0]);
+
+        res.header({ Authorization: 'Bearer ' + token })
+        res.send({ user, token });
 
 
     } catch (err) {
@@ -147,7 +151,6 @@ async function editProfile(req, res) {
         }
 
         if (imageName) {
-
             await database.pool.query('UPDATE users SET name = ?, image = ?, description = ? WHERE id = ?',
                 [name, imageName, description, id]);
 
@@ -210,7 +213,6 @@ async function selectTopics(req, res) {
         res.send({});
 
     } catch (err) {
-        console.log('Error topics: ', err);
         res.status(500);
         res.send({ error: err.message });
     }

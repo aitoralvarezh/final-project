@@ -17,16 +17,18 @@
     width: 200px;
     height: 200px;
     margin: 10px;
-    color: whitesmoke;
+    color: white;
     flex-direction: row;
-    font-size: 30px;
+    font-size: 25px;
     cursor: pointer;
+    font-weight: bold;
+    
     
 }
 
 .topic:before { 
     content: '';
-    background-color: rgba(39, 38, 38, 0.3);
+    background-color: rgba(39, 38, 38, 0.4);
     display: block;
     top: 0;
     left: 0;
@@ -35,3 +37,10 @@
     position: absolute;
     border-radius: 50%;
 }
+
+.topic h3 {
+    color: whitesmoke;
+    position: absolute;
+    
+}
+

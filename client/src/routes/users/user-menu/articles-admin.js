@@ -1,7 +1,7 @@
 import { useMyArticles, deleteArticle } from "../../../api";
 import { Link } from 'react-router-dom'
 import { useUser } from "../../../usercontext";
-import Acordeon from "../register-login/login-button";
+import Acordeon from "../register-login/acordeon";
 import { useRef } from "react";
 import VisibilityButton from "./visibility";
 
@@ -21,7 +21,21 @@ function MyArticles({ reload }) {
     }
 
     if (!articles) return 'Loading...'
-
+    
+    if (!articles.length) return (
+        <div
+            className="complete-data"
+        >
+            <div>
+                <h3>Aún no has escrito ningun artículo</h3>
+                <Link
+                    to="/articles/write"
+                >
+                    ¡Anímate a expresar lo que piensas!
+            </Link>
+            </div>
+        </div>
+    )
     return (
         <div className={'read-article '}>
             {articles.map(article =>
@@ -56,10 +70,9 @@ function MyArticles({ reload }) {
                                 </div>
                             </div>
                         </Acordeon>
-                        <button>
-                            {article.visible}
+                        <div>
                             <VisibilityButton article={article} />
-                        </button>
+                        </div>
                     </div>
                 </div>
 

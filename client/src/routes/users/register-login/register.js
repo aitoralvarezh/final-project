@@ -8,13 +8,17 @@ function Register() {
     const [username, setusername] = useState();
     const [mail, setEmail] = useState();
     const [password, setPassword] = useState();
-    const [isError, setError] = useState();
+    const [isError, setError] = useState(false);
+        const [message, setMessage] = useState();
+
 
     const handleSubmit = async e => {
         e.preventDefault();
         const data = await register(username, password, mail);
         if (data.token) {
             setMe(data)
+            setMessage(true)
+
         } else {
             setError(true)
         }
@@ -38,6 +42,11 @@ function Register() {
                         type="password"
                         value={password} onChange={e => setPassword(e.target.value)} />
                 </label>
+                {message &&
+                    <div>
+                        Registro satisfactorio
+                    </div>
+                    }
                 {isError &&
                     <div className="error">
                         Error de login

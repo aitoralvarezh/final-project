@@ -7,14 +7,14 @@ a {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid rgb(155, 155, 160);
     margin: 30px 40px;
     padding: 10px
 }
 
 .article-title  {
     font-weight: bold;
-    color: black;
+    color: rgb(47, 46, 46);
     font-size: large;
     flex-grow: 1;
     margin-left: 20px;
@@ -65,11 +65,12 @@ a {
 
 
 .new-article-button {
-    position:fixed;
-    height:55px;
-    width: 55px;
-    left: 95%;
-    bottom:5vh;
+/*     position:fixed;*/ 
+    height:60px;
+    width: 60px;
+    left: 370vh;
+    bottom:10vh;
+    border: solid 5px whitesmoke;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,14 +81,49 @@ a {
     font-weight: bold;    
 }
 
-.article-create {
-    width: 400px;
-    height: 200px;
+
+/* ||||||||||||||||||||||||||||||||||||||||||||| CREAR ARTICULO ||||||||||||||||||||||||||||||||||||1111111 */
+.article-create-img {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-image: url('../../img/photo.png');
+    background-position: center;
+    background-size: cover;
+    width: 200px;
+    height: 100px;
     border: black solid 1px;
 }
 
-.minor-choice-selection{
+.main-data-input {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.minor-choice-selection {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.minor-choice-selection select {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    padding: 10px;
+    background-color: white;
+    border:1px solid gray;
+    margin: 5px;
+}
+
+.create-article-data {
+    display: flex;
+    flex-direction:row ;
     justify-content: space-around;
 }
 
@@ -120,4 +156,70 @@ a {
 
     background-color: yellow;
     padding: 20px;
+}
+
+textarea {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    outline: none;
+    white-space: pre-line;
+}
+
+.create-article-content {
+    flex-grow: 1;
+}
+
+
+/* |||||||||||||||||||||||||||||ARTICULO SELECCIONADO ||||||||||||||||||||||||||||||||||||||||||||| */
+.article-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.selected-article {
+    display: flex;
+    justify-content: center;
+}
+
+.article-user-data {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-weight: bold;
+}
+
+.article-user-image {
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 50%;
+    margin: 20px;
+}
+
+.article-content {
+    margin: 20px 20vh;
+    margin-right: 20vh;
+    margin-bottom: 20vh;
+    font-size: 20px;
+}
+
+.article-data .article-header-image {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    width: 800px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+}
+
+textarea {
+    resize: none;
+    overflow: hidden;
 }

@@ -10,11 +10,22 @@
     color: black;
     padding: 10px;
     font-weight: bold;
-    background-color: yellow;
     
 }
 
+.login-register input {
+    border: solid 1px gray;
+}
+
 .log-reg-button {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    outline: none;
+    border: 1px solid rgb(116, 116, 3);
+    background-color: yellow;
     margin:10px
+
 }
 

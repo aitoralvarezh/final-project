@@ -14,17 +14,19 @@ function Banner({ children }) {
         return (
             <div className="banner">
                 <div className="intro-message">
-                    hello
+                    <h3>Buenas, te doy la bienvenida a <strong>Illuminare</strong></h3>
+                     <p>un portal donde leer y compartir tus opiniones y la de muchos usuarios
+                    sobre una diversa variedad de temas.</p>
                 </div>
                 <div>
-                    
-                        <div>
-                            {isRegister ? <Register /> : <Account />}
-                            <div onClick={() => setRegister(!isRegister)} className="toggle">
-                                {isRegister ? 'Ya tienes cuenta? Logeate' : 'No tienes cuenta? Registrate'}
-                            </div>
+
+                    <div className="register-box">
+                        {isRegister ? <Register /> : <Account />}
+                        <div onClick={() => setRegister(!isRegister)} className="toggle">
+                            {isRegister ? 'Ya tienes cuenta? Logeate' : 'No tienes cuenta? Registrate'}
                         </div>
-                    
+                    </div>
+
                 </div>
             </div>
         )
