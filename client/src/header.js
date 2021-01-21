@@ -14,7 +14,7 @@ function Header() {
                     <Link to="/topics">Temas</Link>
                 </div>
                 <div className="tab">
-                    <Link to="/">Home</Link>
+                    <Link to="/">Illuminare</Link>
                 </div>
             </div >
         )
@@ -25,7 +25,7 @@ function Header() {
                 <Link to="/topics">Temas</Link>
             </div>
             <div className="tab">
-                <Link to="/">Home</Link>
+                <Link to="/">Illuminare</Link>
             </div>
             <div>
                 <Account />

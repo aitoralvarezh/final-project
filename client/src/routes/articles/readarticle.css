@@ -65,12 +65,11 @@ a {
 
 
 .new-article-button {
-/*     position:fixed;*/ 
+  position:fixed;
     height:60px;
     width: 60px;
-    left: 370vh;
-    bottom:10vh;
-    border: solid 5px whitesmoke;
+    left: 90%;
+    bottom:5%;
     display: flex;
     justify-content: center;
     align-items: center;
